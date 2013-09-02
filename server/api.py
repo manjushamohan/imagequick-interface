@@ -1,7 +1,7 @@
 from flask import Flask, Response, render_template
 from functools import wraps
 from bson.objectid import ObjectId
-from flask import jsonify
+#from flask import jsonify
 import json
 from datetime import timedelta, datetime
 from flask import make_response, request, current_app
@@ -18,6 +18,32 @@ from common import database
 from batch import voicetotemplate
 from analytics import analytics
 from crud import create
+
+#Overriding JSONIFY for MongoIDs
+try: 
+    import json 
+    import datetime
+except ImportError: 
+    import simplejson as json 
+ 
+try: 
+    from bson.objectid import ObjectId 
+except: 
+    pass 
+ 
+ 
+class APIEncoder(json.JSONEncoder): 
+    def default(self, obj): 
+        if isinstance(obj, (datetime.datetime, datetime.date)): 
+            return obj.ctime() 
+        elif isinstance(obj, datetime.time): 
+            return obj.isoformat() 
+        elif isinstance(obj, ObjectId): 
+            return str(obj) 
+        return json.JSONEncoder.default(self, obj)
+
+def jsonify(data): 
+    return Response(json.dumps(data, cls=APIEncoder),mimetype='application/json') 
 
 app = Flask(__name__)
 
