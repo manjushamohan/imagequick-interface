@@ -1,0 +1,133 @@
+<html class="no-js" lang="en"  ng-app="myApp">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>ImageQuick</title>
+
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link href="css/foundation.css" rel="stylesheet" media="screen">
+  <link href="css/api.css" rel="stylesheet" media="screen">
+  <script src="js/vendor/custom.modernizr.js"></script>
+
+</head>
+
+<body>
+
+<div class="fixed">
+    <nav class="top-bar">
+        <ul class="title-area">
+            <!-- Title Area -->
+            <li class="name">
+                <h1><a href="#">ImageQuick </a></h1>
+            </li>
+            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+            <!-- Left Nav Section -->
+            <ul class="left">
+                
+                <li class="divider"></li>
+                <li class="has-dropdown"><a href="#">File</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Conect</a></li>
+                        <li><a href="#">Quit</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown"><a href="#">Create</a>
+                    <ul class="dropdown">
+                        <li><a ng-click="location.path('/add/voice/')">Voice</a></li>
+                        <li><a ng-click="location.path('/add/format/')">Format</a></li>
+                        <li><a ng-click="location.path('/add/station/')">Station</a></li>
+                        <li><a ng-click="location.path('/add/frequency/')">Frequency</a></li>
+                        <li><a ng-click="location.path('/add/delivery/')">Delivery Style</a></li>
+                        <li><a ng-click="location.path('/add/pos_stmt/')">Position Statement</a></li>
+                        <li><a ng-click="location.path('/add/template/')">Template</a></li>
+                        <li><a ng-click="location.path('/add/hook/')">Hook</a></li>
+                        <li><a ng-click="location.path('/add/hooktemp/')">Hooktemplate</a></li>
+                        <li><a ng-click="location.path('/add/slogen/')">Slogen length</a></li>
+                        <li><a ng-click="location.path('/add/coupons/')">Coupons</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown"><a href="#">Batch</a>
+                    <ul class="dropdown">
+                        <li class="has-dropdown"><a href="#">Voice to template</a>
+                         <ul class="dropdown">
+                            <li><a ng-click="location.path('/add/sfp/')">sfp</a></li>
+                            <li><a ng-click="location.path('/add/sfp/')">sf</a></li>
+                            <li><a ng-click="location.path('/add/station/')">Station</a></li>
+                            <li><a ng-click="location.path('/add/frequency/')">Frequency</a></li>
+                            <li><a ng-click="location.path('/add/pos_stmt/')">Position Statement</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                  </li>
+                <li class="has-dropdown"><a href="#">Analytics</a>
+                    <ul class="dropdown">
+                        <li><a ng-click="location.path('/add/voice/')">Voice</a></li>
+                        <li><a ng-click="location.path('/add/format/')">Format</a></li>
+                        <li><a ng-click="location.path('/add/format/')">Producer</a></li>
+                        <li><a ng-click="location.path('/add/template/')">Template</a></li>
+                        <li><a ng-click="">Voice Format</a></li>
+                        <li class="has-dropdown"><a href="#">Monthly sheet</a>
+                          <ul class="dropdown">
+                              <li><a ng-click="location.path('/add/billm/')">Format</a></li>
+                              <li><a ng-click="location.path('/add/billm/')">Voice</a></li>
+                              <li><a ng-click="location.path('/add/billm/')">Template</a></li>
+                              <li><a ng-click="location.path('/add/billm/')">Producer</a></li>
+                           
+                           </ul> 
+                        </li>
+                        <li class="has-dropdown"><a href="#">Monthly paybills</a>
+                           <ul class="dropdown">
+                            <li><a ng-click="location.path('/add/voice/')">Voice</a></li>
+                            <li><a ng-click="">Producer</a></li> 
+                          </ul>  
+
+                        </li>
+                        
+                    </ul>
+                </li>
+                 <li><a href="#">Help</a></li>
+
+                    </ul>
+                </li>
+
+            </ul>
+
+            <!-- Right Nav Section -->
+            <ul class="right">
+
+                <li class="divider show-for-small"></li>
+                <li class="has-form">
+                    <a class="button" href="#">Log Out</a>
+                </li>
+            </ul>
+        </section>
+    </nav>
+</div>
+
+
+<div class="row">
+  <div ng-view></div>
+</div>
+
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+  <script>
+  document.write('<script src=' +
+    ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+    '.js><\/script>')
+  </script>
+  <script src="js/foundation.min.js"></script>
+  <script>
+  $(document).foundation();
+  </script>
+</body>
+</html>
+ 
