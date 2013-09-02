@@ -144,6 +144,73 @@ def requires_auth(f):
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def get_voices():
     return jsonify({'voices':ui_core.get_voice_list()})
+
+
+@app.route('/get/styles/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_styles():
+    return jsonify({'styles':ui_core.get_style_list()})
+
+
+
+@app.route('/get/templates/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_templates():
+    return jsonify({'templates':ui_core.get_template_list()})
+
+@app.route('/get/hooks/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_hooks():
+    return jsonify({'hooks':ui_core.get_hook_list()})
+
+
+@app.route('/get/producers/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_producers():
+    return jsonify({'producers':ui_core.get_producer_list()})
+
+
+@app.route('/get/formats/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_formats():
+    return jsonify({'formats':ui_core.get_format_list()})
+
+@app.route('/get/category/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_category():
+    return jsonify({'category':ui_core.get_category_list()})
+
+
+@app.route('/get/formatids/<formats>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_formatids(formats):
+    return jsonify({'formatids':ui_core.get_format_ids(formats)})
+
+@app.route('/get/voiceids/<formats>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_voiceids(formats):
+    return jsonify({'voiceids':ui_core.get_voice_ids(formats)})
+
+
+@app.route('/get/styleids/<styles>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_styleids(styles):
+    return jsonify({'styleids':ui_core.get_style_ids(styles)})
+
+
+@app.route('/get/months/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_month():
+    return jsonify({'hooks':ui_core.get_months()})
+
+
+@app.route('/get/months/<month>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_months(month):
+    return jsonify({'hooks':ui_core.get_month_number(month)})
+
+
+
 # @Manju Add functions here. This one is an Example for the code below
 '''
 class AddSlo(wx.Frame):
@@ -181,12 +248,15 @@ def add_slogan_length():
         """
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['length'] and data['slogan']:
-            data['length'] = float(data['length'])
-            create.slogan_length(data) 
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
-            return jsonify({'status':'fail','message':'Missing data for some field'})
+        try:
+            if data['length'] and data['slogan']:
+                data['length'] = float(data['length'])
+                create.slogan_length(data) 
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
     else:
         pass
 
@@ -199,13 +269,16 @@ def add_coupon():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['code'] and data['remaininguses'] and data['maxtracks']:
-            data['remaininguses'] = int(data['remaininguses'])
-            data['maxtracks'] = int(data['maxtracks'])
-            create.coupon(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
-            return jsonify({'status':'fail','message':'Missing data for some field'})
+        try:
+            if data['code'] and data['remaininguses'] and data['maxtracks']:
+                data['remaininguses'] = int(data['remaininguses'])
+                data['maxtracks'] = int(data['maxtracks'])
+                create.coupon(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
     else:
         pass
 
@@ -218,13 +291,16 @@ def add_hook():
         
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['hook'] and data['format'] and data['category'] and data['vo_length'] and data['length'] and data['vo_hook']:
-            data['vo_length'] = float(data['vo_length'])
-            data['length'] = float(data['length'])
-            create.hook(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
-            return jsonify({'status':'fail','message':'Missing data for some field'})
+        try:
+            if data['hook'] and data['format'] and data['category'] and data['vo_length'] and data['length'] and data['vo_hook']:
+                data['vo_length'] = float(data['vo_length'])
+                data['length'] = float(data['length'])
+                create.hook(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
     else:
         pass
 
@@ -258,11 +334,14 @@ def add_frequency():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['frequency'] and data['filename']:
+        try:
+            if data['frequency'] and data['filename']:
             
-            create.frequency(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                create.frequency(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
@@ -277,11 +356,14 @@ def add_station():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['name'] and data['formatids']:
+        try:
+            if data['name'] and data['formatids']:
             
-            create.station(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                create.station(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
@@ -296,11 +378,14 @@ def add_position():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['name'] and data['formatids']:
+        try:
+            if data['name'] and data['formatids']:
             
-            create.position(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                create.position(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
@@ -314,11 +399,14 @@ def add_format():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['name'] and data['realName'] and data['voiceIds']:
+        try:
+            if data['name'] and data['realName'] and data['voiceIds']:
            
-            create.format(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                create.format(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
@@ -333,11 +421,14 @@ def add_hooktemplate():
         
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['name'] and data['filename1'] and data['filename2'] and data['producer'] and data['formatids'] and data['posCue'] and data['posVoiceids'] and data['posStyleids'] and data['statWords'] and data['statCue1'] and data['statCue2'] and data['statVoiceids'] and data['statStyleids'] and data['freCue1'] and data['freCue2'] and data['freVoiceids'] and data['freStyleids'] and data['price']:
+        try:
+            if data['name'] and data['filename1'] and data['filename2'] and data['producer'] and data['formatids'] and data['posCue'] and data['posVoiceids'] and data['posStyleids'] and data['statWords'] and data['statCue1'] and data['statCue2'] and data['statVoiceids'] and data['statStyleids'] and data['freCue1'] and data['freCue2'] and data['freVoiceids'] and data['freStyleids'] and data['price']:
             
-            create.hooktemplate(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                create.hooktemplate(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
@@ -352,12 +443,15 @@ def add_template():
         
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['statCue'] and data['name'] and data['producer'] and data['posCue'] and data['price'] and data['statWords'] and data['filename'] and data['freCue'] and data['length'] and data['formatids'] and data['freStyleids'] and data['freVoiceids'] and data['statStyleids'] and data['posVoiceids'] and data['posStyleids'] and data['statVoiceids'] and data['posWords'] :
+        try:
+            if data['statCue'] and data['name'] and data['producer'] and data['posCue'] and data['price'] and data['statWords'] and data['filename'] and data['freCue'] and data['length'] and data['formatids'] and data['freStyleids'] and data['freVoiceids'] and data['statStyleids'] and data['posVoiceids'] and data['posStyleids'] and data['statVoiceids'] and data['posWords'] :
             
-            data['length'] = float(data['length'])
-            create.template(data)
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+                data['length'] = float(data['length'])
+                create.template(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass

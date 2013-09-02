@@ -52,7 +52,7 @@ app.config(['$httpProvider', function($httpProvider) {
    	$routeProvider.when('/add/hooktemp', {templateUrl: 'partials/hooktemp.html', controller: 'HooktempCtrl'});
    	$routeProvider.when('/add/pos_stmt', {templateUrl: 'partials/pos_stmt.html', controller: 'PositionCtrl'});
    	$routeProvider.when('/add/sfp', {templateUrl: 'partials/sfp.html', controller: 'SfpCtrl'});
-    $routeProvider.when('/add/slogen', {templateUrl: 'partials/slogen.html', controller: 'SlogenCtrl'});
+    $routeProvider.when('/add/slogan', {templateUrl: 'partials/slogen.html', controller: 'SloganCtrl'});
     $routeProvider.when('/add/station', {templateUrl: 'partials/station.html', controller: 'StationCtrl'});
     $routeProvider.when('/add/template', {templateUrl: 'partials/template.html', controller: 'TemplateCtrl'});
     $routeProvider.when('/add/voice', {templateUrl: 'partials/voice.html', controller: 'VoiceCtrl'});

@@ -3,6 +3,8 @@
 
 
   <div class="large-12 columns format">
+    <br>
+  <h2>Add Format</h2>
     <form>
       <fieldset>
 
@@ -13,7 +15,7 @@
               <label class="inline">Industry Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="iname">
+              <input class="in" type="text" id="iname" ng-model="format.name">
             </div>
           </div>
         </div>
@@ -24,7 +26,7 @@
               <label class="inline">Real Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="rname">
+              <input class="in" type="text" id="rname" ng-model="format.realName">
             </div>
           </div>
         </div>
@@ -35,14 +37,14 @@
               <label>Associated Voices</label>
             </div>
             <div class="stwo columns pul">
-                <label ng-repeat="voice in voices" for="checkbox1"><input type="checkbox" id="" ><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice}}</label>
+                <label ng-repeat="voice in voices" ><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice}}</label>
               <p></p>
             </div>
           </div>
         </div>
-        <div class="row">
-          <span class="button small">Add</span>
-        </div>
+         <div class="row">
+        <button class="button small" ng-click="add(format,voices)">Add</button>
+      </div>
       </fieldset>
     </form>
   </div>

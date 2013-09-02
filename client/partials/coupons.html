@@ -3,6 +3,8 @@
 
 
 <div class="large-12 columns format">
+  <br>
+  <h2>Add Coupons</h2>
   <form>
   <fieldset>
    
@@ -13,7 +15,7 @@
               <label class="inline">Code</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="">
+              <input class="in" type="text" id="" ng-model="coupon.code">
             </div>
           </div>
     </div>
@@ -24,7 +26,7 @@
               <label class="inline">Remaining User</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="">
+              <input class="in" type="text" id="" ng-model="coupon.remaininguses">
             </div>
           </div>
       </div>
@@ -34,12 +36,12 @@
               <label class="inline">Max Tracks</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="">
+              <input class="in" type="text" id="" ng-model="coupon.maxtracks">
             </div>
           </div>
       </div>
       <div class="row">
-        <span class="button small">Add</span>
+        <button class="button small" ng-click="add(coupon)">Add</button>
       </div>
   </fieldset>
 </form>

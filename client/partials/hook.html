@@ -3,6 +3,8 @@
 
 
   <div class="large-12 columns format">
+    <br>
+  <h2>Add Hook</h2>
     <form class="custom">
       <fieldset>
         <div class="row">
@@ -11,7 +13,7 @@
               <label class="inline">Hook</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="">
+              <input class="in" type="text" id="" ng-model="hook.hook">
             </div>
           </div>
         </div>
@@ -21,15 +23,8 @@
               <label class="inline">Select Format</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="" class="">
-
-                  <option></option>
-                  <option>HAC</option>
-                  <option>CTY</option>
-                  <option>RCK</option>
-                  <option>ALT</option>
-                  <option>VARITY</option>
-                </select>
+                <select id="customDropdown" class="" ng-options="format as format for format in formats" ng-model="hook.format"></select>
+             
             </div>
           </div>
         </div>
@@ -39,7 +34,7 @@
               <label class="inline">Select Category</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="" class="">
+                <select id="" class="" ng-model="hook.category">
 
                   <option></option>
                   <option>current</option>
@@ -56,7 +51,7 @@
               <label class="inline">Normal Length</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="fname">
+              <input class="in" type="text" id="fname" ng-model="hook.length">
             </div>
           </div>
         </div>
@@ -66,13 +61,13 @@
               <label class="inline">VoiceOver Length</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="fname">
+              <input class="in" type="text" id="fname" ng-model="hook.length">
             </div>
           </div>
         </div>
-        <div class="row">
-          <span class="button small">Add</span>
-        </div>
+         <div class="row">
+        <button class="button small" ng-click="add(hook)">Add</button>
+      </div>
       </fieldset>
     </form>
   </div>
