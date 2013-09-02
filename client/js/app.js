@@ -56,7 +56,9 @@ app.config(['$httpProvider', function($httpProvider) {
     $routeProvider.when('/add/station', {templateUrl: 'partials/station.html', controller: 'StationCtrl'});
     $routeProvider.when('/add/template', {templateUrl: 'partials/template.html', controller: 'TemplateCtrl'});
     $routeProvider.when('/add/voice', {templateUrl: 'partials/voice.html', controller: 'VoiceCtrl'});
+    $routeProvider.when('/analytics/', {templateUrl: 'partials/analytics/home.html', controller: 'Analt_HomeCtrl'});
 
 
+    $routeProvider.when('/view/templates/imaging', {templateUrl: 'partials/view/templates.html', controller: 'TemplateImagingViewCtrl'});
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

@@ -49,3 +49,6 @@ input[type="text"]:focus {
   position: relative;
   left: 273px;
   width: 70px; }
+.template {
+line-height: 2;
+}

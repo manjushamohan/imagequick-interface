@@ -7,7 +7,7 @@ from datetime import timedelta, datetime
 from flask import make_response, request, current_app
 from functools import update_wrapper
 import hashlib
-
+from calendar import month_name
 from time import sleep
 from urllib import urlencode
 from sqlite3 import connect, Error as sqerr
@@ -18,7 +18,7 @@ from common import database
 from batch import voicetotemplate
 from analytics import analytics
 from crud import create
-
+import  time
 #Overriding JSONIFY for MongoIDs
 try: 
     import json 
@@ -140,10 +140,13 @@ def requires_auth(f):
 
     return decorated
 #Write all function to get data here: 
+
 @app.route('/get/voices/', methods=['GET'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def get_voices():
     return jsonify({'voices':ui_core.get_voice_list()})
+
+
 # @Manju Add functions here. This one is an Example for the code below
 '''
 class AddSlo(wx.Frame):
@@ -361,6 +364,54 @@ def add_template():
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
+
+
+#All analyitics goes here 
+
+@app.route('/analytics/voice/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def analytics_voice_chart():
+    chart = analytics.chart_voices()
+    chart = chart.fillna(0)
+    c_data = {
+        'labels':chart.index.tolist(),
+        'buy':chart.buy.tolist(),
+        'play':chart.play.tolist(),
+        'b2p':chart.b2p_percent.tolist()
+    }
+    return jsonify({'chart':c_data})
+
+@app.route('/analytics/voice/monthly/<int:count>/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def analytics_voice_monthly(count):
+    x = count
+    now = time.localtime()
+    comb = [time.localtime(time.mktime([now.tm_year, now.tm_mon - n, 1, 0, 0, 0, 0, 0, 0]))[:2] for n in range(x)]
+    months = []
+    for i in comb:
+        chart = analytics.monthly_voice(i[0],i[1])
+        chart = chart.fillna(0)
+        c_data = {
+            'month':month_name[i[1]],
+            'labels':chart.index.tolist(),
+            'buy':chart.buy.tolist(),
+            'play':chart.play.tolist(),
+        }
+        months.append(c_data)
+    return jsonify({'charts':months})
+
+
+
+
+#All View Functions Goes in here 
+@app.route('/view/templates/imaging', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def view_tempaltes_imaging():
+    t = []
+    templates = database.db.templates.find()
+    for template in templates:
+        t.append(template)
+    return jsonify({'templates':t})
 
 
 
