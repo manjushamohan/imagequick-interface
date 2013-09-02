@@ -139,7 +139,11 @@ def requires_auth(f):
         return f(user=user, *args, **kwargs)
 
     return decorated
-
+#Write all function to get data here: 
+@app.route('/get/voices/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_voices():
+    return jsonify({'voices':ui_core.get_voice_list()})
 # @Manju Add functions here. This one is an Example for the code below
 '''
 class AddSlo(wx.Frame):

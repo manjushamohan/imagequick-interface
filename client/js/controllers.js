@@ -16,8 +16,11 @@ function CouponsCtrl($scope) {
 function DeliveryCtrl($scope) {
     $scope.name = 'Delivery';
 }
-function FormatCtrl($scope) {
+function FormatCtrl($scope,$http) {
     $scope.name = 'Format';
+    $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
 }
 function FrequencyCtrl($scope) {
     $scope.name = 'Frequency';

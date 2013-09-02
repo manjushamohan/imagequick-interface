@@ -35,13 +35,7 @@
               <label>Associated Voices</label>
             </div>
             <div class="stwo columns pul">
-              <label for="checkbox1"><input type="checkbox" id="" ><span class="custom checkbox"></span>&nbsp&nbspSam</label>
-              <label for="checkbox2"><input type="checkbox" id="" ><span class="checkbox"></span>&nbsp&nbspGary</label>
-              <label for="checkbox3"><input type="checkbox"  id="" ><span class="custom checkbox"></span>&nbsp&nbspLisa</label>
-              <label for="checkbox4"><input type="checkbox" id=""><span class="custom checkbox"></span>&nbsp&nbspsteve</label>
-              <label for="checkbox5"><input type="checkbox" id="" ><span class="custom checkbox"></span>&nbsp&nbspmike</label>
-              <label for="checkbox6"><input type="checkbox" id=""></input><span class="custom checkbox"></span>&nbsp&nbspAlex</label>
-              <label for="checkbox7"><input type="checkbox" id=""></input><span class="custom checkbox"></span>&nbsp&nbspSassy</label>
+                <label ng-repeat="voice in voices" for="checkbox1"><input type="checkbox" id="" ><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice}}</label>
               <p></p>
             </div>
           </div>
