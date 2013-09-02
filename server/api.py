@@ -232,11 +232,14 @@ def add_voice():
        
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
-        if data['name'] and data['description']:
-            
-            create.voice(data) 
-            return jsonify({'status':'success','data':data}) # Pick this data using Angular
-        else:
+        try:
+            if data['name'] and data['description']:
+                
+                create.voice(data) 
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass

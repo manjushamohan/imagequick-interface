@@ -1,5 +1,6 @@
 'use strict';
-
+var SERVER_DOMAIN = 'http://localhost:5000'
+//Add no ending slashes.
 /* Controllers */
 
 
@@ -34,7 +35,7 @@ function SfpCtrl($scope) {
     $scope.name = 'Sfp';
 }
 function SlogenCtrl($scope) {
-    $scope.name = 'Slogen';
+    $scope.name = 'Slogan';
 }
 function StationCtrl($scope) {
     $scope.name = 'Station';
@@ -42,8 +43,19 @@ function StationCtrl($scope) {
 function TemplateCtrl($scope) {
     $scope.name = 'Template';
 }
-function VoiceCtrl($scope) {
+function VoiceCtrl($scope,$http) {
     $scope.name = 'Voice';
+    $scope.add = function(voice){
+      $http.post( SERVER_DOMAIN + "/add/voice",voice).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("Added "+data.data.data.name,'success')
+          $scope.voice = {}
+        }
+        else{
+          $.notify("Error adding "+voice.name,'error')
+        }
+      });
+    }
 }
 
 

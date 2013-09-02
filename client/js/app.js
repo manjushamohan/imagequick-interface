@@ -17,6 +17,27 @@ app.run(function ($rootScope, $location, $anchorScroll, $routeParams) {
 ;
 
 
+/*
+ For adding remove method to arrays
+ */
+
+app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);
+
+
+ Array.prototype.remove = function () {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 // Declare app level module which depends on filters, and services
 
