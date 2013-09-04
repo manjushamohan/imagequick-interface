@@ -2,7 +2,7 @@
 
 
 
-var app = angular.module('myApp', [])
+var app = angular.module('myApp', ['ace'])
 
 
 app.run(function ($rootScope, $location, $anchorScroll, $routeParams) {

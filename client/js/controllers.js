@@ -650,14 +650,14 @@ function TemplateImagingViewCtrl($http,$scope){
   })
 
   $scope.edit = function(template){
+    $scope.textarea = template;
     $('#json').foundation('reveal', 'open');
-    var opt = { 
-        change: function(data) { console.log(data) },
-        propertyclick: function(path) { /* called when a property is clicked with the JS path to that property */ }
-    };
-    /* opt.propertyElement = '<textarea>'; */ // element of the property field, <input> is default
-    /* opt.valueElement = '<textarea>'; */  // element of the value field, <input> is default
-    $('.editor').jsonEditor(myjson, opt);
+    var a = angular.copy(template)
+    var session = ace.EditSession(a)
+    var editor = ace.edit("editor",session);
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/javascript");
+    
   }
 }
 
