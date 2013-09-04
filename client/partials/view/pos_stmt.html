@@ -1,0 +1,79 @@
+<div>
+<div class="row">
+    <h1>Position Statement</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterSlogan" placeholder="enter slogan to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Slogan</th>
+                
+                
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="position in positions | filter:filterSlogan |limitTo:10">
+                <td>{{position.name}}</td>
+               
+                
+                <td><span class="button tiny" ng-click="edit(position._id)">Edit</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div id="editslogan" class="reveal-modal">
+
+  <div class="large-12 columns format">
+     <br>
+  <h2>Edit Position Statement</h2>
+    <form>
+      <fieldset>
+
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Slogan</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="foname" ng-model="editposition.name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Associated Formats</label>
+            </div>
+            <div class="small-8 columns pull-1">
+              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="editposition.formatIds.indexOf(format.uid.toString()) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <button class="button small" ng-click="save(editposition)">Add</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+
+<a class="close-reveal-modal">&#215;</a>
+</div>

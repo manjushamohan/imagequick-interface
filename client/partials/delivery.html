@@ -11,13 +11,13 @@
               <label class="inline">Delivery Style</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="dstyle">
+              <input class="in" type="text" id="dstyle" ng-model="style.name">
             </div>
           </div>
         </div>
         <div class="row">
-          <span class="button small push-5">Add</span>
-        </div>
+        <button class="button small" ng-click="add(style)">Add</button>
+      </div>
       </fieldset>
     </form>
   </div>

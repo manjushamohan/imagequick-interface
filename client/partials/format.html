@@ -36,14 +36,13 @@
             <div class="small-3 columns push-1">
               <label>Associated Voices</label>
             </div>
-            <div class="stwo columns pul">
-                <label ng-repeat="voice in voices" ><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice}}</label>
-              <p></p>
+            <div class="small-8 columns pull-1">
+                <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
             </div>
           </div>
         </div>
          <div class="row">
-        <button class="button small" ng-click="add(format,voices)">Add</button>
+        <button class="button small" ng-click="add(format)">Add</button>
       </div>
       </fieldset>
     </form>

@@ -1,0 +1,24 @@
+<h2>Analytics <span class="subheader">Summary</span></h2>
+<hr>
+<h4 style="text-align:center">Voices</h4>
+<div class="row">
+	<div class="small-5 columns">
+		<canvas id="myChart" width="400" height="200"></canvas>
+		<p style="text-align:center">All time Voice Play Status</p>
+	</div>
+	<div class="small-5 columns">
+		<canvas id="buyChart" width="400" height="200"></canvas>
+		<p style="text-align:center">All time Voice Buy Status</p>
+	</div>	
+</div>
+<div class="row">
+	<div class="small-5 columns">
+		<canvas id="playChartMonth" width="400" height="200"></canvas>
+		<p style="text-align:center"><span ng-repeat="month in months">{{month}} </span><br>Monthly Voice Play Status</p>
+	</div>
+	<div class="small-5 columns">
+		<canvas id="buyChartMonth" width="400" height="200"></canvas>
+		<p style="text-align:center"><span ng-repeat="month in months">{{month}} </span><br>Monthly Voice Buy Status</p>
+	</div>	
+</div>
+<hr>

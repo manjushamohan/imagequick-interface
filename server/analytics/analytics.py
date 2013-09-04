@@ -44,6 +44,7 @@ def chart_voices():
 				elif event['event'] == 'purchase':
 					frame.buy[voice] += 1
 	frame['b2p_percent'] = (frame.buy/frame.play)*100
+	frame.fillna(0)
 	frame.to_excel('files/voice_analysis.xls')
 	return frame
 
@@ -121,7 +122,7 @@ def chart_voice_format():
 	chart.to_excel('files/voice_format_analysis.xls')
 	return chart
 
-def monthly_voice(month,year):
+def monthly_voice(year,month):
 	voices = get_voice_list()
 	play = [0.0]*len(voices)
 	buy = [0.0]*len(voices)
@@ -130,7 +131,7 @@ def monthly_voice(month,year):
 		'play':play
 	}
 	frame = DataFrame(data,index=voices)
-	for e in database.db.events.find({'date.year':(year),'date.month':str(month)}):
+	for e in database.db.events.find({'date.year':(year),'date.month':(month)}):
 		for v in e['voices']:
 			if v is not None:
 				if e['event'] == 'play':
@@ -141,7 +142,7 @@ def monthly_voice(month,year):
 	frame.to_excel('files/monthly_voices.xls')
 	return frame
 
-def monthly_templates(month,year):
+def monthly_templates(year,month):
 	index = get_template_list()
 	t_play = [0.0]*len(index)
 	t_buy = t_play
@@ -164,7 +165,7 @@ def monthly_templates(month,year):
 	chart.to_excel('files/monthly_templates.xls')
 	return chart
 
-def monthly_format(month,year):
+def monthly_format(year,month):
 	index = get_format_list()
 	f_play = [0.0]*len(index)
 	f_buy = [0.0]*len(index)
@@ -184,7 +185,7 @@ def monthly_format(month,year):
 	chart.to_excel('files/monthly_formats.xls')
 	return chart
 
-def monthly_producer(month,year):
+def monthly_producer(year,month):
 	index = get_producer_list()
 	p_play = [0.0]*len(index)
 	p_buy = [0.0]*len(index)
@@ -207,7 +208,7 @@ def monthly_producer(month,year):
 	return chart
 
 
-def pay_voice(month,year):
+def pay_voice(year,month):
 	voices = get_voice_list()
 	commission = [0.0]*len(voices)
 	data = {
@@ -226,7 +227,7 @@ def pay_voice(month,year):
 	frame.to_excel('files/pay_voices.xls')
 	return frame
 
-def pay_producer(month,year):
+def pay_producer(year,month):
 	producers = get_producer_list()
 	commission = [0.0]*len(producers)
 	data = {

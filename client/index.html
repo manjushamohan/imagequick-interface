@@ -8,7 +8,7 @@
   <link href="css/foundation.css" rel="stylesheet" media="screen">
   <link href="css/api.css" rel="stylesheet" media="screen">
   <script src="js/vendor/custom.modernizr.js"></script>
-
+  <link rel="stylesheet" href="lib/jsoneditor/jsoneditor.css">
 </head>
 
 <body>
@@ -44,6 +44,21 @@
                         <li><a ng-click="location.path('/add/coupons/')">Coupons</a></li>
                     </ul>
                 </li>
+                <li class="has-dropdown"><a href="#">View</a>
+                    <ul class="dropdown">
+                        <li><a ng-click="location.path('/view/voice/')">Voice</a></li>
+                        <li><a ng-click="location.path('/view/format/')">Format</a></li>
+                        <li><a ng-click="location.path('/view/station/')">Station</a></li>
+                        <li><a ng-click="location.path('/view/frequency/')">Frequency</a></li>
+                        <li><a ng-click="location.path('/view/delivery/')">Delivery Style</a></li>
+                        <li><a ng-click="location.path('/view/pos_stmt/')">Position Statement</a></li>
+                        <li><a ng-click="location.path('/view/template/')">Template</a></li>
+                        <li><a ng-click="location.path('/view/hook/')">Hook</a></li>
+                        <li><a ng-click="location.path('/view/hooktemp/')">Hooktemplate</a></li>
+                        <li><a ng-click="location.path('/view/slogan/')">Slogan length</a></li>
+                        <li><a ng-click="location.path('/view/coupons/')">Coupons</a></li>
+                    </ul>
+                </li>
                 <li class="has-dropdown"><a href="#">Batch</a>
                     <ul class="dropdown">
                         <li class="has-dropdown"><a href="#">Voice to template</a>
@@ -57,7 +72,7 @@
                         </li>
                       </ul>
                   </li>
-                <li class="has-dropdown"><a href="#">Analytics</a>
+                <li class="has-dropdown"><a ng-click="location.path('/analytics')">Analytics</a>
                     <ul class="dropdown">
                         <li><a ng-click="location.path('/add/voice/')">Voice</a></li>
                         <li><a ng-click="location.path('/add/format/')">Format</a></li>
@@ -83,7 +98,7 @@
                         
                     </ul>
                 </li>
-                 <li><a href="#">Help</a></li>
+                 <li><a ng-click="location.path('/operations')">Operations</a></li>
 
                     </ul>
                 </li>
@@ -111,6 +126,8 @@
   <script>
   $(document).foundation();
   </script>
+  <script src="lib/jsoneditor/jquery.jsoneditor.js"></script>
+  <script type="text/javascript" src="lib/chart.min.js"></script>
   <script src="lib/notify.min.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="js/app.js"></script>

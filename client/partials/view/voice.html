@@ -1,0 +1,76 @@
+<div>
+<div class="row">
+    <h1>Voices</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterVoice" placeholder="enter voice name to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Voice Name</th>
+                <th>Description</th>
+                
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="voice in voices | filter:filterVoice |limitTo:10">
+                <td>{{voice.name}}</td>
+                <td>{{voice.description}}</td>
+                
+                <td><span class="button tiny" ng-click="edit(voice.uid)">Edit</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div id="editvoice" class="reveal-modal">
+<div class="large-12 columns voice">
+  <br>
+  <h2>Edit Voice</h2>
+  <form>
+  <fieldset>
+   
+    <div class="row">
+      <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Voice Name</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="fname" ng-model="editvoice.name">
+            </div>
+          </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Description</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="fname" ng-model="editvoice.description">
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <button class="button small" ng-click="save(editvoice)" type="submit">Done editing</button>
+      </div>
+  </fieldset>
+</form>
+</div>
+<a class="close-reveal-modal">&#215;</a>
+</div>

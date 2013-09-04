@@ -25,9 +25,9 @@
             <div class="small-3 columns push-1">
               <label>Associated Formats</label>
             </div>
-            <div class="stwo columns pul">
+            <div class="small-8 columns pull-1">
               <p></p>
-             <label ng-repeat="format in formats" ><input type="checkbox" id="" ng-model="station.formatIds"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format}}</label>
+             <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
               <p></p>
             </div>
           </div>

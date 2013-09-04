@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="small-12">
+        <h1>Hook</h1>
+        
+        <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterHook" placeholder="enter hook to search for     ">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="small-6 columns left" ng-repeat="hook in hooks | filter:filterHook |limitTo:6">
+            <div class="small-11 panel">
+                <p>
+                    
+                    <b>Hook</b>: {{ hook.hook }} <br>
+                    <b>Format</b> :{{hook.format}}<br>
+                    <b>Category</b>: {{ hook.category }}
+                   
+                    
+                </p>
+                
+                <span class="button tiny" ng-click="edit(hook._id)">Edit</span>
+               
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="edithook" class="reveal-modal">
+<div class="large-12 columns format">
+    <br>
+  <h2>Edit Hook</h2>
+    <form class="custom">
+      <fieldset>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Hook</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="" ng-model="edithook.hook">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Select Format</label>
+            </div>
+            <div class="small-4 columns pull-5">
+                <select id="customDropdown" class="in" ng-options="format.name for format in formats" ng-model="edithook.format"></select>
+             
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Select Category</label>
+            </div>
+            <div class="small-4 columns pull-5">
+                <select id="" class="in" ng-model="hook.editcategory">
+
+                  <option></option>
+                  <option>current</option>
+                  <option>recurrent</option>
+                  <option>gold</option>
+                  <option>special</option>
+                </select>
+            </div>
+          </div>
+        </div>
+         <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Normal Length</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="fname" ng-model="edithook.length.length">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">VoiceOver Length</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="fname" ng-model="edithook.volength.length">
+            </div>
+          </div>
+        </div>
+        
+         <div class="row">
+        <button class="button small" ng-click="save(edithook)">Add</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+
+<a class="close-reveal-modal">&#215;</a>
+</div>

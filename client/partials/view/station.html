@@ -1,0 +1,79 @@
+<div>
+<div class="row">
+    <h1>Stations</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterStation" placeholder="enter station name to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Station Name</th>
+                
+                
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="station in stations | filter:filterStation |limitTo:10">
+                <td>{{station.name}}</td>
+               
+                
+                <td><span class="button tiny" ng-click="edit(station._id)">Edit</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div id="editstation" class="reveal-modal">
+
+  <div class="large-12 columns format">
+     <br>
+  <h2>Edit Station</h2>
+    <form>
+      <fieldset>
+
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Station name</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="foname" ng-model="editstation.name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Associated Formats</label>
+            </div>
+            <div class="small-8 columns pull-1">
+              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="editstation.formatIds.indexOf(format.uid.toString()) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <button class="button small" ng-click="save(editstation)">Add</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+
+<a class="close-reveal-modal">&#215;</a>
+</div>

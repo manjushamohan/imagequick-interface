@@ -1,0 +1,90 @@
+<div>
+<div class="row">
+    <h1>Format</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterFormat" placeholder="enter format name to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Industry Name</th>
+                <th>Real Name</th>
+                
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="format in formats | filter:filterFormat">
+                <td>{{format.name}}</td>
+                <td>{{format.realName}}</td>
+                
+                <td><span class="button tiny" ng-click="edit(format.uid)">Edit</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<div id="editformat" class="reveal-modal">
+ <div class="large-12 columns format">
+    <br>
+  <h2>Edit Format</h2>
+    <form>
+      <fieldset>
+
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Industry Name</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="iname" ng-model="editformat.name">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Real Name</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="rname" ng-model="editformat.realName">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Associated Voices</label>
+            </div>
+            
+              <div class="small-8 columns pull-1">
+                <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)" ng-checked="editformat.voiceIds.indexOf(voice.uid.toString()) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+                
+            </div>
+         
+        </div>
+         <div class="row">
+        <button class="button small" ng-click="save(editformat,voices)">Add</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+<a class="close-reveal-modal">&#215;</a>
+</div>

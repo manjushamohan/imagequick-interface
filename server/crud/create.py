@@ -62,13 +62,13 @@ def hook(hook):
 		})
 		if hook['length'] is not None:
 			database.db.hook_lengths.insert({
-				'name':hook['name'],
+				'file':hook['hook'],
 				'length':hook['length']				
 			})
-		if hook['vo_length'] is not None:
+		if hook['volength'] is not None:
 			database.db.hook_lengths.insert({
-				'name':hook['vo_hook'],
-				'length':hook['vo_length'],				
+				'file':hook['hook']+"_VO",
+				'length':hook['volength'],				
 			})
 		return True
 	else:

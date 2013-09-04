@@ -1,0 +1,62 @@
+<div>
+<div class="row">
+    <h1>Delivery styles</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterStyle" placeholder="enter style name to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Delivery Style</th>
+                
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="style in styles | filter:filterStyle | limitTo:10">
+                <td>{{style.name}}</td>
+                
+                
+                <td><span class="button tiny" ng-click="edit(style.uid)">Edit</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="editstyle" class="reveal-modal">
+<div class="large-12 columns format">
+    <br>
+  <h2>Edit Delivery Style</h2>
+    <form>
+      <fieldset>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Delivery Style</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="dstyle" ng-model="editstyle.name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <button class="button small" ng-click="save(editstyle)">Edit</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+<a class="close-reveal-modal">&#215;</a>
+</div>

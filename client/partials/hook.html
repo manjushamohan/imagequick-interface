@@ -23,7 +23,7 @@
               <label class="inline">Select Format</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="customDropdown" class="" ng-options="format as format for format in formats" ng-model="hook.format"></select>
+                <select id="customDropdown" class="in" ng-options="format.name for format in formats" ng-model="hook.format"></select>
              
             </div>
           </div>
@@ -34,7 +34,7 @@
               <label class="inline">Select Category</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="" class="" ng-model="hook.category">
+                <select id="" class="in" ng-model="hook.category">
 
                   <option></option>
                   <option>current</option>
@@ -61,7 +61,7 @@
               <label class="inline">VoiceOver Length</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="fname" ng-model="hook.length">
+              <input class="in" type="text" id="fname" ng-model="hook.volength">
             </div>
           </div>
         </div>

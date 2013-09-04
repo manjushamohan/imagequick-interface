@@ -7,7 +7,7 @@ from datetime import timedelta, datetime
 from flask import make_response, request, current_app
 from functools import update_wrapper
 import hashlib
-
+from calendar import month_name
 from time import sleep
 from urllib import urlencode
 from sqlite3 import connect, Error as sqerr
@@ -17,8 +17,8 @@ from common import ui_core
 from common import database
 from batch import voicetotemplate
 from analytics import analytics
-from crud import create
-
+from crud import create,edit
+import  time
 #Overriding JSONIFY for MongoIDs
 try: 
     import json 
@@ -140,10 +140,12 @@ def requires_auth(f):
 
     return decorated
 #Write all function to get data here: 
+
 @app.route('/get/voices/', methods=['GET'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def get_voices():
     return jsonify({'voices':ui_core.get_voice_list()})
+
 
 
 @app.route('/get/styles/', methods=['GET'])
@@ -209,8 +211,6 @@ def get_month():
 def get_months(month):
     return jsonify({'hooks':ui_core.get_month_number(month)})
 
-
-
 # @Manju Add functions here. This one is an Example for the code below
 '''
 class AddSlo(wx.Frame):
@@ -261,6 +261,29 @@ def add_slogan_length():
         pass
 
 
+@app.route('/add/style', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def add_style():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name']:
+                
+                create.style(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+
+
+
 
 @app.route('/add/coupon', methods=['POST'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -292,8 +315,8 @@ def add_hook():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['hook'] and data['format'] and data['category'] and data['vo_length'] and data['length'] and data['vo_hook']:
-                data['vo_length'] = float(data['vo_length'])
+            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length']:
+                data['volength'] = float(data['volength'])
                 data['length'] = float(data['length'])
                 create.hook(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
@@ -357,7 +380,7 @@ def add_station():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['name'] and data['formatids']:
+            if data['name'] and data['formatIds']:
             
                 create.station(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
@@ -379,7 +402,7 @@ def add_position():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['name'] and data['formatids']:
+            if data['name'] and data['formatIds']:
             
                 create.position(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
@@ -401,7 +424,7 @@ def add_format():
         #Do some double checking verifications
         try:
             if data['name'] and data['realName'] and data['voiceIds']:
-           
+                data['voiceIds'] = [str(x) for x in data['voiceIds']]
                 create.format(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -455,6 +478,345 @@ def add_template():
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
+
+
+
+@app.route('/all/voices/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def voices():
+    return jsonify({'voices':ui_core.get_voices()})
+
+@app.route('/gets/voice/<int:id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def voice(id):
+    return jsonify({'voice':ui_core.get_voice(id)})
+
+
+@app.route('/edit/voice', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_voice():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['description']:
+                
+                edit.voice(data) 
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
+@app.route('/all/coupons/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def coupons():
+    return jsonify({'coupons':ui_core.get_coupons()})
+
+@app.route('/gets/coupon/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def coupon(id):
+    return jsonify({'coupon':ui_core.get_coupon(id)})
+
+
+@app.route('/edit/coupon', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_coupon():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['code'] and data['remaininguses'] and data['maxtracks']:
+                data['remaininguses'] = int(data['remaininguses'])
+                data['maxtracks'] = int(data['maxtracks'])
+                edit.coupon(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+
+
+
+@app.route('/all/styles/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def styles():
+    return jsonify({'styles':ui_core.get_styles()})
+
+@app.route('/gets/style/<int:id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def style(id):
+    return jsonify({'style':ui_core.get_style(id)})
+
+@app.route('/edit/style', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_style():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name']:
+                
+                edit.style(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+@app.route('/all/slogans/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def slogans():
+    return jsonify({'slogans':ui_core.get_slogans()})
+
+@app.route('/gets/slogan/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def slogan(id):
+    return jsonify({'slogan':ui_core.get_slogan(id)})
+
+@app.route('/edit/slogan_length', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_slogan_length():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['length'] and data['slogan']:
+                data['length'] = float(data['length'])
+                edit.slogan_length(data) 
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+
+@app.route('/all/formats/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def formats():
+    return jsonify({'formats':ui_core.get_formats()})
+
+@app.route('/gets/format/<int:id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def format(id):
+    return jsonify({'format':ui_core.get_format(id)})
+
+@app.route('/edit/format', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_format():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['realName'] and data['voiceIds']:
+                data['voiceIds'] = [str(x) for x in data['voiceIds']]
+                edit.format(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
+
+
+@app.route('/all/frequencies/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def frequencies():
+    return jsonify({'frequencies':ui_core.get_frequencies()})
+
+@app.route('/gets/frequency/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def frequency(id):
+    return jsonify({'frequency':ui_core.get_frequency(id)})
+
+@app.route('/edit/frequency', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_frequency():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['frequency'] and data['filename']:
+            
+                edit.frequency(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+@app.route('/all/hooks/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def hooks():
+    return jsonify({'hooks':ui_core.get_hooks()})
+
+@app.route('/gets/hook/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def hook(id):
+    return jsonify({'hook':ui_core.get_hook(id)})
+
+@app.route('/edit/hook', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_hook():
+    if request.method == 'POST':
+        
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length']:
+                
+                edit.hook(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+@app.route('/all/positions/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def positions():
+    return jsonify({'positions':ui_core.get_positions()})
+
+@app.route('/gets/position/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def position(id):
+    return jsonify({'position':ui_core.get_position(id)})
+
+
+@app.route('/edit/position', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_position():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['formatIds']:
+            
+                edit.position(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
+@app.route('/all/stations/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def stations():
+    return jsonify({'stations':ui_core.get_stations()})
+
+@app.route('/gets/station/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def station(id):
+    return jsonify({'station':ui_core.get_station(id)})
+
+
+@app.route('/edit/station', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_station():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['formatIds']:
+            
+                edit.station(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
+
+
+
+
+
+#All analyitics goes here 
+
+@app.route('/analytics/voice/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def analytics_voice_chart():
+    chart = analytics.chart_voices()
+    chart = chart.fillna(0)
+    c_data = {
+        'labels':chart.index.tolist(),
+        'buy':chart.buy.tolist(),
+        'play':chart.play.tolist(),
+        'b2p':chart.b2p_percent.tolist()
+    }
+    return jsonify({'chart':c_data})
+
+@app.route('/analytics/voice/monthly/<int:count>/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def analytics_voice_monthly(count):
+    x = count
+    now = time.localtime()
+    comb = [time.localtime(time.mktime([now.tm_year, now.tm_mon - n, 1, 0, 0, 0, 0, 0, 0]))[:2] for n in range(x)]
+    months = []
+    for i in comb:
+        chart = analytics.monthly_voice(i[0],i[1])
+        chart = chart.fillna(0)
+        c_data = {
+            'month':month_name[i[1]],
+            'labels':chart.index.tolist(),
+            'buy':chart.buy.tolist(),
+            'play':chart.play.tolist(),
+        }
+        months.append(c_data)
+    return jsonify({'charts':months})
+
+
+
+
+#All View Functions Goes in here 
+@app.route('/view/templates/imaging', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def view_tempaltes_imaging():
+    t = []
+    templates = database.db.templates.find()
+    for template in templates:
+        t.append(template)
+    return jsonify({'templates':t})
 
 
 
