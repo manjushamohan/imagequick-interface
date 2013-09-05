@@ -129,6 +129,7 @@ def get_formats():
 	return formatlist
 def get_format(id):
 	format=database.db.formats.find_one({'uid':id})
+	format['voiceIds']=[int(x) for x in format['voiceIds']]
 	return format
 
 def get_frequencies():
@@ -161,6 +162,7 @@ def get_positions():
 def get_position(id):
 	id=ObjectId(id)
 	position=database.db.postions.find_one({'_id':id})
+	position['formatIds']=[int(x) for x in position['formatIds']]
 	return position
 
 def get_stations():
@@ -171,4 +173,41 @@ def get_stations():
 def get_station(id):
 	id=ObjectId(id)
 	station=database.db.stations.find_one({'_id':id})
+	station['formatIds']=[int(x) for x in station['formatIds']]
 	return station
+
+def get_hooktemps():
+	hooktemplist = []
+	for hooktemp in database.db.hook_templates.find():
+		hooktemplist.append(hooktemp)
+	return hooktemplist
+
+def get_hooktemp(id):
+	id=ObjectId(id)
+	hooktemp=database.db.hook_templates.find_one({'_id':id})
+	hooktemp['formatids']=[int(x) for x in hooktemp['formatids']]
+	hooktemp['posVoiceids']=[int(x) for x in hooktemp['posVoiceids']]
+	hooktemp['posStyleids']=[int(x) for x in hooktemp['posStyleids']]
+	hooktemp['statVoiceids']=[int(x) for x in hooktemp['statVoiceids']]
+	hooktemp['statStyleids']=[int(x) for x in hooktemp['statStyleids']]
+	hooktemp['freVoiceids']=[int(x) for x in hooktemp['freVoiceids']]
+	hooktemp['freStyleids']=[int(x) for x in hooktemp['freStyleids']]
+	return hooktemp
+
+def get_templates():
+	templatelist = []
+	for template in database.db.templates.find():
+		templatelist.append(template)
+	return templatelist
+
+def get_template(id):
+	id=ObjectId(id)
+	template=database.db.templates.find_one({'_id':id})
+	template['formatids']=[int(x) for x in template['formatids']]
+	template['posVoiceids']=[int(x) for x in template['posVoiceids']]
+	template['posStyleids']=[int(x) for x in template['posStyleids']]
+	template['statVoiceids']=[int(x) for x in template['statVoiceids']]
+	template['statStyleids']=[int(x) for x in template['statStyleids']]
+	template['freVoiceids']=[int(x) for x in template['freVoiceids']]
+	template['freStyleids']=[int(x) for x in template['freStyleids']]
+	return template

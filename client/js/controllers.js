@@ -85,14 +85,17 @@ function FormatCtrl($scope,$http,VoiceIds) {
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
           $scope.format = {}
+          
+
         }
         else{
           $.notify("Error adding "+format.name,'error')
         }
       });
 
-     VoiceIds=[]; 
+     
     }
+    VoiceIds=[];
 
 }
 
@@ -269,17 +272,17 @@ function HooktempCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
         }
       });
 
-       FormatIds=[];
-       PosVoiceIds=[];
-       PosStyleIds=[];
-       FreVoiceIds=[];
-       FreStyleIds=[];
-       StatVoiceIds=[];
-       StatStyleIds=[];
-       $scope.value=false;
+       
     }
 
-
+      FormatIds=[];
+      PosVoiceIds=[];
+      PosStyleIds=[];
+      FreVoiceIds=[];
+      FreStyleIds=[];
+      StatVoiceIds=[];
+      StatStyleIds=[];
+      $scope.value=false;
 
 }
 
@@ -383,9 +386,9 @@ function StationCtrl($scope,$http,FormatIds) {
         }
       });
 
-       FormatIds=[];
+       
     }
-
+    FormatIds=[];
 
 }
 
@@ -517,16 +520,16 @@ function TemplateCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
         }
       });
 
-       FormatIds=[];
-       PosVoiceIds=[];
-       PosStyleIds=[];
-       FreVoiceIds=[];
-       FreStyleIds=[];
-       StatVoiceIds=[];
-       StatStyleIds=[];
-       $scope.value=false;
+       
     }
-
+      FormatIds=[];
+      PosVoiceIds=[];
+      PosStyleIds=[];
+      FreVoiceIds=[];
+      FreStyleIds=[];
+      StatVoiceIds=[];
+      StatStyleIds=[];
+      $scope.value=false;
 
 
 
@@ -1096,6 +1099,322 @@ function StationviewCtrl($scope,$http,FormatIds) {
     });
     
     $('#editstation').foundation('reveal', 'close');
+
+    }
+
+  }
+
+  
+
+}
+
+function HooktempviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceIds,PosStyleIds,FreStyleIds,StatStyleIds) {
+  $http.get(SERVER_DOMAIN+'/all/hooktemps/').then(function(response){
+     $scope.hooktemps = response.data.hooktemps
+    })
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $http.get(SERVER_DOMAIN+'/get/styles/').then(function(response){
+     $scope.styles = response.data.styles
+    })
+
+  $scope.select_format=function(format,value){
+     if(value==true){
+          
+          FormatIds.push(format.uid);
+          console.log(FormatIds)
+     }
+     else{
+         
+          var index=FormatIds.indexOf(format.uid)
+          FormatIds.splice(index,1);  
+          console.log(FormatIds)
+     }
+    }
+
+    $scope.select_posvoice=function(voice,value1){
+     if(value1==true){
+          
+          PosVoiceIds.push(voice.uid);
+          console.log(PosVoiceIds)
+     }
+     else{
+         
+          var index=PosVoiceIds.indexOf(voice.uid)
+          PosVoiceIds.splice(index,1);  
+          console.log(PosVoiceIds)
+     }
+    }
+
+    $scope.select_frevoice=function(voice,value5){
+     if(value5==true){
+          
+          FreVoiceIds.push(voice.uid);
+          console.log(FreVoiceIds)
+     }
+     else{
+         
+          var index=FreVoiceIds.indexOf(voice.uid)
+          FreVoiceIds.splice(index,1);  
+          console.log(FreVoiceIds)
+     }
+    }
+    $scope.select_statvoice=function(voice,value3){
+     if(value3==true){
+          
+          StatVoiceIds.push(voice.uid);
+          console.log(StatVoiceIds)
+     }
+     else{
+         
+          var index=StatVoiceIds.indexOf(voice.uid)
+          StatVoiceIds.splice(index,1);  
+          console.log(StatVoiceIds)
+     }
+    }
+    $scope.select_posstyle=function(style,value2){
+     if(value2==true){
+          
+          PosStyleIds.push(style.uid);
+          console.log(PosStyleIds)
+     }
+     else{
+         
+          var index=PosStyleIds.indexOf(style.uid)
+          PosStyleIds.splice(index,1);  
+          console.log(PosStyleIds)
+     }
+    }
+    $scope.select_frestyle=function(style,value6){
+     if(value6==true){
+          
+          FreStyleIds.push(style.uid);
+          console.log(FreStyleIds)
+     }
+     else{
+         
+          var index=FreStyleIds.indexOf(style.uid)
+          FreStyleIds.splice(index,1);  
+          console.log(FreStyleIds)
+     }
+    }
+
+    $scope.select_statstyle=function(style,value4){
+     if(value4==true){
+          
+          StatStyleIds.push(style.uid);
+          console.log(StatStyleIds)
+     }
+     else{
+         
+          var index=StatStyleIds.indexOf(style.uid)
+          StatStyleIds.splice(index,1);  
+          console.log(StatStyleIds)
+     }
+    }
+
+  $scope.edit=function(id){
+    console.log(id)
+    $('#edithooktemp').foundation('reveal', 'open');
+    $http.get(SERVER_DOMAIN+'/gets/hooktemp/'+id).then(function(response){
+    console.log(response.data.hooktemp)
+     $scope.edithooktemp=response.data.hooktemp
+      FormatIds=$scope.edithooktemp.formatids;
+      PosVoiceIds=$scope.edithooktemp.posVoiceids;
+      PosStyleIds=$scope.edithooktemp.posVoiceids;
+      FreVoiceIds=$scope.edithooktemp.freVoiceids;
+      FreStyleIds=$scope.edithooktemp.freStyleids;
+      StatVoiceIds=$scope.edithooktemp.statVoiceids;
+      StatStyleIds=$scope.edithooktemp.statStyleids;
+
+    })
+
+    $scope.save=function(hooktemp){
+      hooktemp.formatids=FormatIds;
+      hooktemp.posVoiceids=PosVoiceIds;
+      hooktemp.posStyleids=PosStyleIds;
+      hooktemp.freVoiceids=FreVoiceIds;
+      hooktemp.freStyleids=FreStyleIds;
+      hooktemp.statVoiceids=StatVoiceIds;
+      hooktemp.statStyleids=StatStyleIds;
+      console.log(hooktemp)
+      $http.post( SERVER_DOMAIN + "/edit/hooktemp",hooktemp).then(function(data){
+      if(data.data.status == 'success'){
+        $.notify("Edited "+data.data.data.name,'success')
+        $scope.edithooktemp = {}
+        $http.get(SERVER_DOMAIN+'/all/hooktemps/').then(function(response){
+     $scope.hooktemps = response.data.hooktemps
+    })
+
+      }
+      else{
+        $.notify("Error adding "+hooktemp.name,'error')
+      }
+    });
+    
+    $('#edithooktemp').foundation('reveal', 'close');
+
+    }
+
+  }
+
+  
+
+}
+
+function TemplateviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceIds,PosStyleIds,FreStyleIds,StatStyleIds) {
+  $http.get(SERVER_DOMAIN+'/all/templates/').then(function(response){
+     $scope.templates = response.data.templates
+    })
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $http.get(SERVER_DOMAIN+'/get/styles/').then(function(response){
+     $scope.styles = response.data.styles
+    })
+
+  $scope.select_format=function(format,value){
+     if(value==true){
+          
+          FormatIds.push(format.uid);
+          console.log(FormatIds)
+     }
+     else{
+         
+          var index=FormatIds.indexOf(format.uid)
+          FormatIds.splice(index,1);  
+          console.log(FormatIds)
+     }
+    }
+
+    $scope.select_posvoice=function(voice,value1){
+     if(value1==true){
+          
+          PosVoiceIds.push(voice.uid);
+          console.log(PosVoiceIds)
+     }
+     else{
+         
+          var index=PosVoiceIds.indexOf(voice.uid)
+          PosVoiceIds.splice(index,1);  
+          console.log(PosVoiceIds)
+     }
+    }
+
+    $scope.select_frevoice=function(voice,value5){
+     if(value5==true){
+          
+          FreVoiceIds.push(voice.uid);
+          console.log(FreVoiceIds)
+     }
+     else{
+         
+          var index=FreVoiceIds.indexOf(voice.uid)
+          FreVoiceIds.splice(index,1);  
+          console.log(FreVoiceIds)
+     }
+    }
+    $scope.select_statvoice=function(voice,value3){
+     if(value3==true){
+          
+          StatVoiceIds.push(voice.uid);
+          console.log(StatVoiceIds)
+     }
+     else{
+         
+          var index=StatVoiceIds.indexOf(voice.uid)
+          StatVoiceIds.splice(index,1);  
+          console.log(StatVoiceIds)
+     }
+    }
+    $scope.select_posstyle=function(style,value2){
+     if(value2==true){
+          
+          PosStyleIds.push(style.uid);
+          console.log(PosStyleIds)
+     }
+     else{
+         
+          var index=PosStyleIds.indexOf(style.uid)
+          PosStyleIds.splice(index,1);  
+          console.log(PosStyleIds)
+     }
+    }
+    $scope.select_frestyle=function(style,value6){
+     if(value6==true){
+          
+          FreStyleIds.push(style.uid);
+          console.log(FreStyleIds)
+     }
+     else{
+         
+          var index=FreStyleIds.indexOf(style.uid)
+          FreStyleIds.splice(index,1);  
+          console.log(FreStyleIds)
+     }
+    }
+
+    $scope.select_statstyle=function(style,value4){
+     if(value4==true){
+          
+          StatStyleIds.push(style.uid);
+          console.log(StatStyleIds)
+     }
+     else{
+         
+          var index=StatStyleIds.indexOf(style.uid)
+          StatStyleIds.splice(index,1);  
+          console.log(StatStyleIds)
+     }
+    }
+
+  $scope.edit=function(id){
+    console.log(id)
+    $('#edittemplate').foundation('reveal', 'open');
+    $http.get(SERVER_DOMAIN+'/gets/template/'+id).then(function(response){
+    console.log(response.data.template)
+     $scope.edittemplate=response.data.template
+      FormatIds=$scope.edittemplate.formatids;
+      PosVoiceIds=$scope.edittemplate.posVoiceids;
+      PosStyleIds=$scope.edittemplate.posVoiceids;
+      FreVoiceIds=$scope.edittemplate.freVoiceids;
+      FreStyleIds=$scope.edittemplate.freStyleids;
+      StatVoiceIds=$scope.edittemplate.statVoiceids;
+      StatStyleIds=$scope.edittemplate.statStyleids;
+
+    })
+
+    $scope.save=function(template){
+      template.formatids=FormatIds;
+      template.posVoiceids=PosVoiceIds;
+      template.posStyleids=PosStyleIds;
+      template.freVoiceids=FreVoiceIds;
+      template.freStyleids=FreStyleIds;
+      template.statVoiceids=StatVoiceIds;
+      template.statStyleids=StatStyleIds;
+      console.log(template)
+      $http.post( SERVER_DOMAIN + "/edit/template",template).then(function(data){
+      if(data.data.status == 'success'){
+        $.notify("Edited "+data.data.data.name,'success')
+        $scope.edittemplate = {}
+        $http.get(SERVER_DOMAIN+'/all/templates/').then(function(response){
+     $scope.templates = response.data.templates
+    })
+
+      }
+      else{
+        $.notify("Error adding "+template.name,'error')
+      }
+    });
+    
+    $('#edittemplate').foundation('reveal', 'close');
 
     }
 

@@ -64,12 +64,12 @@ app.config(['$httpProvider', function($httpProvider) {
     $routeProvider.when('/view/format', {templateUrl: 'partials/view/format.html', controller: 'FormatviewCtrl'});
     $routeProvider.when('/view/frequency', {templateUrl: 'partials/view/frequency.html', controller: 'FrequencyviewCtrl'});
     $routeProvider.when('/view/hook', {templateUrl: 'partials/view/hook.html', controller: 'HookviewCtrl'});
-    $routeProvider.when('/view/hooktemp', {templateUrl: 'partials/hooktemp.html', controller: 'HooktempCtrl'});
+    $routeProvider.when('/view/hooktemp', {templateUrl: 'partials/view/hooktemp.html', controller: 'HooktempviewCtrl'});
     $routeProvider.when('/view/pos_stmt', {templateUrl: 'partials/view/pos_stmt.html', controller: 'PositionviewCtrl'});
     $routeProvider.when('/view/sfp', {templateUrl: 'partials/sfp.html', controller: 'SfpCtrl'});
     $routeProvider.when('/view/slogan', {templateUrl: 'partials/view/slogan.html', controller: 'SloganviewCtrl'});
     $routeProvider.when('/view/station', {templateUrl: 'partials/view/station.html', controller: 'StationviewCtrl'});
-    $routeProvider.when('/view/template', {templateUrl: 'partials/template.html', controller: 'TemplateCtrl'});
+    $routeProvider.when('/view/template', {templateUrl: 'partials/view/template.html', controller: 'TemplateviewCtrl'});
     $routeProvider.when('/view/templates/imaging', {templateUrl: 'partials/view/templates.html', controller: 'TemplateImagingViewCtrl'});
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

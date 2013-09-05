@@ -1,8 +1,47 @@
+<div class="row">
+    <div class="small-12">
+        <h1>Templates</h1>
+        
+        <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterTemplate" placeholder="enter Template Name to search for     ">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="small-6 columns left" ng-repeat="template in templates | filter:filterTemplate ">
+            <div class="small-11 panel">
+                <p>
+                    
+                    <b>Template Name</b>: {{ template.name }} <br>
+                    <b>File Name</b> :{{template.filename}}<br>
+                    <b>Producer</b>: {{ template.producer }}<br>
+                    <b>Price</b>:{{template.price}}<br>
+                    <b>Length</b>:{{template.length}}
+                    
+                </p>
+                
+                <span class="button tiny" ng-click="edit(template._id)">Edit</span>
+               
 
 
-  <div class="large-12 columns format">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="edittemplate" class="reveal-modal">
+
+ <div class="large-12 columns format">
      <br>
-  <h2>Add Template</h2>
+  <h2>Edit Template</h2>
     <form class="">
       <fieldset>
 
@@ -13,7 +52,7 @@
               <label class=" inline">Template Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="fname" ng-model="template.name">
+              <input class="in" type="text" id="fname" ng-model="edittemplate.name">
             </div>
           </div>
         </div>
@@ -24,7 +63,7 @@
               <label class=" inline">File Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in radius" type="text" id="fname" ng-model="template.filename">
+              <input class="in radius" type="text" id="fname" ng-model="edittemplate.filename">
             </div>
           </div>
         </div>
@@ -34,7 +73,7 @@
               <label class=" inline">Length</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="fname" ng-model="template.length">
+              <input class="in" type="text" id="fname" ng-model="edittemplate.length">
             </div>
           </div>
         </div>
@@ -45,7 +84,7 @@
               <label class=" inline">Producer</label>
             </div>
             <div class="small-9 columns">
-              <input class="in radius" type="text" id="fname" ng-model="template.producer">
+              <input class="in radius" type="text" id="fname" ng-model="edittemplate.producer">
             </div>
           </div>
         </div>
@@ -55,7 +94,7 @@
               <label class=" inline">Price</label>
             </div>
             <div class="small-9 columns">
-              <input class="in radius" type="text" id="fname" ng-model="template.price">
+              <input class="in radius" type="text" id="fname" ng-model="edittemplate.price">
             </div>
           </div>
         </div>
@@ -65,7 +104,7 @@
               <label>Available formates</label>
             </div>
             <div class="small-8 columns pull-1">
-              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
+              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="edittemplate.formatids.indexOf(format.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
             </div>
           </div>
         </div>
@@ -76,7 +115,7 @@
               <label>Associated Voices</label>
             </div>
             <div class="small-8 columns pull-1">
-              <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_posvoice(voice,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+              <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_posvoice(voice,value1)" ng-checked="edittemplate.posVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
               <p></p>
             </div>
           </div>
@@ -87,7 +126,7 @@
               <label>No: of Words</label>
             </div>
             <div class="small-9 columns">
-              <input type="text" class="in" id="no_wrd" ng-model="template.posWords">
+              <input type="text" class="in" id="no_wrd" ng-model="edittemplate.posWords">
             </div>
           </div>
         </div>
@@ -97,7 +136,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="template.posCue">
+                <input type="text" class="in" id="delay" ng-model="edittemplate.posCue">
                 
 
              </div>
@@ -109,7 +148,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value2" ng-click="select_posstyle(style,value2)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value2" ng-click="select_posstyle(style,value2)" ng-checked="edittemplate.posStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -123,7 +162,7 @@
                 <label>Associated Voices</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value3" ng-click="select_statvoice(voice,value3)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+               <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value3" ng-click="select_statvoice(voice,value3)" ng-checked="edittemplate.statVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
                 <p></p>
               </div>
             </div>
@@ -134,7 +173,7 @@
                 <label>No: of Words</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="no_wrd" ng-model="template.statWords">
+                <input type="text" class="in" id="no_wrd" ng-model="edittemplate.statWords">
               </div>
             </div>
           </div>
@@ -144,7 +183,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="template.statCue">
+                <input type="text" class="in" id="delay" ng-model="edittemplate.statCue">
                 
 
              </div>
@@ -156,7 +195,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value4" ng-click="select_statstyle(style,value4)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value4" ng-click="select_statstyle(style,value4)" ng-checked="edittemplate.statStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -171,7 +210,7 @@
                   <label>Associated Voices</label>
                 </div>
                 <div class="small-8 columns pull-1">
-                  <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value5" ng-click="select_frevoice(voice,value5)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+                  <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value5" ng-click="select_frevoice(voice,value5)" ng-checked="edittemplate.freVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
                   <p></p>
                 </div>
               </div>
@@ -182,7 +221,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="template.freCue">
+                <input type="text" class="in" id="delay" ng-model="edittemplate.freCue">
                 
 
              </div>
@@ -194,7 +233,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value6" ng-click="select_frestyle(style,value6)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value6" ng-click="select_frestyle(style,value6)" ng-checked="edittemplate.freStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -203,7 +242,7 @@
           </div>
 
                <div class="row">
-        <button class="button small" ng-click="add(template)">Add</button>
+        <button class="button small" ng-click="save(edittemplate)">Done</button>
       </div>
             </fieldset>
           </form>
@@ -211,3 +250,5 @@
 
 
        
+<a class="close-reveal-modal">&#215;</a>
+</div>

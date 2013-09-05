@@ -75,7 +75,7 @@
             </div>
             
               <div class="small-8 columns pull-1">
-                <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)" ng-checked="editformat.voiceIds.indexOf(voice.uid.toString()) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+                <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)" ng-checked="editformat.voiceIds.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
                 
             </div>
          

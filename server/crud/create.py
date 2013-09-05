@@ -48,7 +48,7 @@ def template(template):
 	
 def hooktemplate(template):
 	if template['name'] is not None:
-		database.db.templates.insert(template)
+		database.db.hook_templates.insert(template)
 		return True
 	else:
 		return False

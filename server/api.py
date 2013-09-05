@@ -381,7 +381,8 @@ def add_station():
         #Do some double checking verifications
         try:
             if data['name'] and data['formatIds']:
-            
+
+                data['formatIds']=[str(x) for x in data['formatIds']]
                 create.station(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -403,7 +404,7 @@ def add_position():
         #Do some double checking verifications
         try:
             if data['name'] and data['formatIds']:
-            
+                data['formatIds']=[str(x) for x in data['formatIds']]
                 create.position(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -446,7 +447,13 @@ def add_hooktemplate():
         #Do some double checking verifications
         try:
             if data['name'] and data['filename1'] and data['filename2'] and data['producer'] and data['formatids'] and data['posCue'] and data['posVoiceids'] and data['posStyleids'] and data['statWords'] and data['statCue1'] and data['statCue2'] and data['statVoiceids'] and data['statStyleids'] and data['freCue1'] and data['freCue2'] and data['freVoiceids'] and data['freStyleids'] and data['price']:
-            
+                data['formatids'] = [str(x) for x in data['formatids']]
+                data['posVoiceids'] = [str(x) for x in data['posVoiceids']]
+                data['posStyleids'] = [str(x) for x in data['posStyleids']]
+                data['statVoiceids'] = [str(x) for x in data['statVoiceids']]
+                data['statStyleids'] = [str(x) for x in data['statStyleids']]
+                data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
+                data['freStyleids'] = [str(x) for x in data['freStyleids']]
                 create.hooktemplate(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -468,7 +475,13 @@ def add_template():
         #Do some double checking verifications
         try:
             if data['statCue'] and data['name'] and data['producer'] and data['posCue'] and data['price'] and data['statWords'] and data['filename'] and data['freCue'] and data['length'] and data['formatids'] and data['freStyleids'] and data['freVoiceids'] and data['statStyleids'] and data['posVoiceids'] and data['posStyleids'] and data['statVoiceids'] and data['posWords'] :
-            
+                data['formatids'] = [str(x) for x in data['formatids']]
+                data['posVoiceids'] = [str(x) for x in data['posVoiceids']]
+                data['posStyleids'] = [str(x) for x in data['posStyleids']]
+                data['statVoiceids'] = [str(x) for x in data['statVoiceids']]
+                data['statStyleids'] = [str(x) for x in data['statStyleids']]
+                data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
+                data['freStyleids'] = [str(x) for x in data['freStyleids']]
                 data['length'] = float(data['length'])
                 create.template(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
@@ -480,6 +493,8 @@ def add_template():
         pass
 
 
+
+#All View Functions Goes in here 
 
 @app.route('/all/voices/', methods=['GET'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -722,7 +737,7 @@ def edit_position():
         #Do some double checking verifications
         try:
             if data['name'] and data['formatIds']:
-            
+                data['formatIds']=[str(x) for x in data['formatIds']]
                 edit.position(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -754,7 +769,7 @@ def edit_station():
         #Do some double checking verifications
         try:
             if data['name'] and data['formatIds']:
-            
+                data['formatIds']=[str(x) for x in data['formatIds']]
                 edit.station(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -763,6 +778,79 @@ def edit_station():
             return jsonify({'status':'fail','message':'Missing data for some field'})
     else:
         pass
+
+@app.route('/all/hooktemps/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def hooktemps():
+    return jsonify({'hooktemps':ui_core.get_hooktemps()})
+
+@app.route('/gets/hooktemp/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def hooktemp(id):
+    return jsonify({'hooktemp':ui_core.get_hooktemp(id)})
+
+@app.route('/edit/hooktemp', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_hooktemp():
+    if request.method == 'POST':
+        
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['filename1'] and data['filename2'] and data['producer'] and data['formatids'] and data['posCue'] and data['posVoiceids'] and data['posStyleids'] and data['statWords'] and data['statCue1'] and data['statCue2'] and data['statVoiceids'] and data['statStyleids'] and data['freCue1'] and data['freCue2'] and data['freVoiceids'] and data['freStyleids'] and data['price']:
+                data['formatids'] = [str(x) for x in data['formatids']]
+                data['posVoiceids'] = [str(x) for x in data['posVoiceids']]
+                data['posStyleids'] = [str(x) for x in data['posStyleids']]
+                data['statVoiceids'] = [str(x) for x in data['statVoiceids']]
+                data['statStyleids'] = [str(x) for x in data['statStyleids']]
+                data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
+                data['freStyleids'] = [str(x) for x in data['freStyleids']]
+                edit.hooktemp(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+@app.route('/all/templates/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def templates():
+    return jsonify({'templates':ui_core.get_templates()})
+
+@app.route('/gets/template/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def template(id):
+    return jsonify({'template':ui_core.get_template(id)})
+
+@app.route('/edit/template', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_template():
+    if request.method == 'POST':
+        
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['statCue'] and data['name'] and data['producer'] and data['posCue'] and data['price'] and data['statWords'] and data['filename'] and data['freCue'] and data['length'] and data['formatids'] and data['freStyleids'] and data['freVoiceids'] and data['statStyleids'] and data['posVoiceids'] and data['posStyleids'] and data['statVoiceids'] and data['posWords'] :
+                data['formatids'] = [str(x) for x in data['formatids']]
+                data['posVoiceids'] = [str(x) for x in data['posVoiceids']]
+                data['posStyleids'] = [str(x) for x in data['posStyleids']]
+                data['statVoiceids'] = [str(x) for x in data['statVoiceids']]
+                data['statStyleids'] = [str(x) for x in data['statStyleids']]
+                data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
+                data['freStyleids'] = [str(x) for x in data['freStyleids']]
+                data['length'] = float(data['length'])
+                edit.template(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
 
 
 

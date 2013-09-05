@@ -64,7 +64,7 @@
               <label>Associated Formats</label>
             </div>
             <div class="small-8 columns pull-1">
-              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="editposition.formatIds.indexOf(format.uid.toString()) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
+              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="editposition.formatIds.indexOf(format.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
             </div>
           </div>
         </div>

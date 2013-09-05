@@ -79,3 +79,13 @@ def station(station):
 	station['_id']=ObjectId(station['_id'])
 	database.db.stations.save(station)
 	return True
+
+def hooktemp(hooktemp):
+	hooktemp['_id']=ObjectId(hooktemp['_id'])
+	database.db.hook_templates.save(hooktemp)
+	return True
+
+def template(template):
+	template['_id']=ObjectId(template['_id'])
+	database.db.templates.save(template)
+	return True

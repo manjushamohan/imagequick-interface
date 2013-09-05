@@ -1,10 +1,47 @@
+<div class="row">
+    <div class="small-12">
+        <h1>HookTemplates</h1>
+        
+        <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterHook" placeholder="enter Template Name to search for     ">
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="small-6 columns left" ng-repeat="hooktemp in hooktemps | filter:filterHook ">
+            <div class="small-11 panel">
+                <p>
+                    
+                    <b>Template Name</b>: {{ hooktemp.name }} <br>
+                    <b>File Name</b> :{{hooktemp.filename1}}<br>
+                    <b>Producer</b>: {{ hooktemp.producer }}<br>
+                    <b>Price</b>:{{hooktemp.price}}
+                    
+                </p>
+                
+                <span class="button tiny" ng-click="edit(hooktemp._id)">Edit</span>
+               
 
 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="edithooktemp" class="reveal-modal">
 
 
   <div class="large-12 columns format">
     <br>
-  <h2>Add Hooktemplate</h2>
+  <h2>Edit Hooktemplate</h2>
     <form class="">
       <fieldset>
 
@@ -15,7 +52,7 @@
               <label class=" inline">Template Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="" ng-model="hooktemp.name">
+              <input class="in" type="text" id="" ng-model="edithooktemp.name">
             </div>
           </div>
         </div>
@@ -26,7 +63,7 @@
               <label class=" inline">File Name</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="" ng-model="hooktemp.filename1">
+              <input class="in" type="text" id="" ng-model="edithooktemp.filename1">
             </div>
           </div>
         </div>
@@ -38,7 +75,7 @@
               <label class=" inline">Producer</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="" ng-model="hooktemp.producer">
+              <input class="in" type="text" id="" ng-model="edithooktemp.producer">
             </div>
           </div>
         </div>
@@ -48,7 +85,7 @@
               <label class=" inline">Price</label>
             </div>
             <div class="small-9 columns">
-              <input class="in" type="text" id="" ng-model="hooktemp.price">
+              <input class="in" type="text" id="" ng-model="edithooktemp.price">
             </div>
           </div>
         </div>
@@ -58,7 +95,7 @@
               <label>Available formates</label>
             </div>
             <div class="small-8 columns pull-1">
-              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
+              <label ng-repeat="format in formats" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_format(format,value)" ng-checked="edithooktemp.formatids.indexOf(format.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{format.name}}</div></label>
             </div>
           </div>
         </div>
@@ -69,7 +106,7 @@
               <label>Associated Voices</label>
             </div>
             <div class="small-8 columns pull-1">
-              <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_posvoice(voice,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+              <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_posvoice(voice,value1)" ng-checked="edithooktemp.posVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
               <p></p>
             </div>
           </div>
@@ -81,7 +118,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="hooktemp.posCue">
+                <input type="text" class="in" id="delay" ng-model="edithooktemp.posCue">
                 
 
              </div>
@@ -93,7 +130,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value2" ng-click="select_posstyle(style,value2)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value2" ng-click="select_posstyle(style,value2)" ng-checked="edithooktemp.posStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -107,7 +144,7 @@
                 <label>Associated Voices</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value3" ng-click="select_statvoice(voice,value3)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+               <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value3" ng-click="select_statvoice(voice,value3)" ng-checked="edithooktemp.statVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
                 <p></p>
               </div>
             </div>
@@ -118,7 +155,7 @@
                 <label>No: of Words</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="no_wrd" ng-model="hooktemp.statWords">
+                <input type="text" class="in" id="no_wrd" ng-model="edithooktemp.statWords">
               </div>
             </div>
           </div>
@@ -128,7 +165,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="hooktemp.statCue1">
+                <input type="text" class="in" id="delay" ng-model="edithooktemp.statCue1">
                 
 
              </div>
@@ -140,7 +177,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value4" ng-click="select_statstyle(style,value4)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value4" ng-click="select_statstyle(style,value4)" ng-checked="edithooktemp.statStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -155,7 +192,7 @@
                   <label>Associated Voices</label>
                 </div>
                 <div class="small-8 columns pull-1">
-                  <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value5" ng-click="select_frevoice(voice,value5)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+                  <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value5" ng-click="select_frevoice(voice,value5)" ng-checked="edithooktemp.freVoiceids.indexOf(voice.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
                   <p></p>
                 </div>
               </div>
@@ -166,7 +203,7 @@
               <label>Delay/Cue</label>
               </div>
               <div class="small-9 columns">
-                <input type="text" class="in" id="delay" ng-model="hooktemp.freCue1">
+                <input type="text" class="in" id="delay" ng-model="edithooktemp.freCue1">
                 
 
              </div>
@@ -178,7 +215,7 @@
               <label>Associated Style</label>
               </div>
               <div class="small-8 columns pull-1">
-               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value6" ng-click="select_frestyle(style,value6)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
+               <label ng-repeat="style in styles" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value6" ng-click="select_frestyle(style,value6)" ng-checked="edithooktemp.freStyleids.indexOf(style.uid) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{style.name}}</div></label>
               <p></p>
                 
 
@@ -193,7 +230,7 @@
                     <label>File Name</label>
                   </div>
                   <div class="small-9 columns">
-                   <input type="text" class="in" id="" ng-model="hooktemp.filename2">
+                   <input type="text" class="in" id="" ng-model="edithooktemp.filename2">
                  </div>
                </div>
              </div>
@@ -204,7 +241,7 @@
                     <label>Delay/Cue</label>
                   </div>
                   <div class="small-9 columns">
-                   <input type="text" class="in" id="dc" ng-model="hooktemp.statCue2">
+                   <input type="text" class="in" id="dc" ng-model="edithooktemp.statCue2">
                  </div>
                </div>
              </div>
@@ -216,16 +253,21 @@
                     <label>Delay/Cue</label>
                   </div>
                   <div class="small-9 columns">
-                   <input type="text" class="in" id="fd" ng-model="hooktemp.freCue2">
+                   <input type="text" class="in" id="fd" ng-model="edithooktemp.freCue2">
                  </div>
                </div>
              </div>
 
 
              <div class="row">
-        <button class="button small" ng-click="add(hooktemp)">Add</button>
+        <button class="button small" ng-click="save(edithooktemp)">Add</button>
       </div>
           </fieldset>
         </form>
       </div>
 
+
+
+
+<a class="close-reveal-modal">&#215;</a>
+</div>
