@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="frequency in frequencies | filter:filterFrequency |limitTo:10">
+            <tr ng-repeat="frequency in frequencies | filter:filterFrequency">
                 <td>{{frequency.frequency}}</td>
                 <td>{{frequency.filename}}</td>
                 

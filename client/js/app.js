@@ -51,11 +51,11 @@ app.config(['$httpProvider', function($httpProvider) {
    	$routeProvider.when('/add/hook', {templateUrl: 'partials/hook.html', controller: 'HookCtrl'});
    	$routeProvider.when('/add/hooktemp', {templateUrl: 'partials/hooktemp.html', controller: 'HooktempCtrl'});
    	$routeProvider.when('/add/pos_stmt', {templateUrl: 'partials/pos_stmt.html', controller: 'PositionCtrl'});
-   	$routeProvider.when('/add/sfp', {templateUrl: 'partials/sfp.html', controller: 'SfpCtrl'});
-    $routeProvider.when('/add/slogan', {templateUrl: 'partials/slogen.html', controller: 'SloganCtrl'});
+   	$routeProvider.when('/add/slogan', {templateUrl: 'partials/slogen.html', controller: 'SloganCtrl'});
     $routeProvider.when('/add/station', {templateUrl: 'partials/station.html', controller: 'StationCtrl'});
     $routeProvider.when('/add/template', {templateUrl: 'partials/template.html', controller: 'TemplateCtrl'});
     $routeProvider.when('/add/voice', {templateUrl: 'partials/voice.html', controller: 'VoiceCtrl'});
+    $routeProvider.when('/add/user', {templateUrl: 'partials/user.html', controller: 'UserCtrl'})
     $routeProvider.when('/analytics/', {templateUrl: 'partials/analytics/home.html', controller: 'Analt_HomeCtrl'});
 
     $routeProvider.when('/view/voice', {templateUrl: 'partials/view/voice.html', controller: 'VoiceviewCtrl'});
@@ -71,5 +71,14 @@ app.config(['$httpProvider', function($httpProvider) {
     $routeProvider.when('/view/station', {templateUrl: 'partials/view/station.html', controller: 'StationviewCtrl'});
     $routeProvider.when('/view/template', {templateUrl: 'partials/view/template.html', controller: 'TemplateviewCtrl'});
     $routeProvider.when('/view/templates/imaging', {templateUrl: 'partials/view/templates.html', controller: 'TemplateImagingViewCtrl'});
+
+    $routeProvider.when('/batch/sfp', {templateUrl: 'partials/sfp.html', controller: 'SfpbatchCtrl'});
+    $routeProvider.when('/batch/sf', {templateUrl: 'partials/sfp.html', controller: 'SfbatchCtrl'});
+    $routeProvider.when('/batch/station', {templateUrl: 'partials/sfp.html', controller: 'StationbatchCtrl'});
+    $routeProvider.when('/batch/frequency', {templateUrl: 'partials/sfp.html', controller: 'FrequencybatchCtrl'});
+    $routeProvider.when('/batch/pos_stmt', {templateUrl: 'partials/sfp.html', controller: 'PositionbatchCtrl'});
+
+
+
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

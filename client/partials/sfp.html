@@ -5,7 +5,7 @@
 
   <div class="large-12 columns format">
      <br>
-  <h2>SFP</h2>
+  <h2>{{name}}</h2>
     <form class="custom">
       <fieldset>
         <div class="row">
@@ -14,15 +14,8 @@
               <label class="inline">Select Format</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="" class="">
-
-                  <option></option>
-                  <option>HAC</option>
-                  <option>CTY</option>
-                  <option>RCK</option>
-                  <option>ALT</option>
-                  <option>VARITY</option>
-                </select>
+                <select id="customDropdown" class="in" ng-options="format.name for format in formats" ng-model="sfp.format"></select>
+             
             </div>
           </div>
         </div>
@@ -32,24 +25,13 @@
               <label class="inline">Select Voice</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="" class="">
-
-                  <option></option>
-                  <option>Sam</option>
-                  <option>Gary</option>
-                  <option>Lisa</option>
-                  <option>Steve</option>
-                  <option>Mike</option>
-                  <option>Alex</option>
-                  <option>Sassy</option>
-                  <option>Scot</option>
-
-                </select>
+                <select id="customDropdown" class="in" ng-options="voice.name for voice in voices" ng-model="sfp.voice"></select>
+             
             </div>
           </div>
         </div>
         <div class="row">
-          <span class="button small">Update</span>
+          <span class="button small" ng-click="update(sfp)">Update</span>
           <span class="button secondary small">Cancel</span>
         </div>
       </fieldset>

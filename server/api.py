@@ -852,6 +852,100 @@ def edit_template():
         pass
 
 
+@app.route('/update/sfp', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def update_sfp():
+    if request.method == 'POST':
+       
+        data = request.json 
+        try:
+            if data['format'] and data['voice']:
+                
+                voicetotemplate.station_frequency_position(data['format'],data['voice'])
+                return jsonify({'status':'success'}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+@app.route('/update/sf', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def update_sf():
+    if request.method == 'POST':
+       
+        data = request.json 
+        try:
+            if data['format'] and data['voice']:
+                
+                voicetotemplate.station_frequency(data['format'],data['voice'])
+                return jsonify({'status':'success'}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+@app.route('/update/station', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def update_station():
+    if request.method == 'POST':
+       
+        data = request.json 
+        try:
+            if data['format'] and data['voice']:
+                
+                voicetotemplate.station(data['format'],data['voice'])
+                return jsonify({'status':'success'}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+@app.route('/update/frequency', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def update_frequency():
+    if request.method == 'POST':
+       
+        data = request.json 
+        try:
+            if data['format'] and data['voice']:
+                
+                voicetotemplate.frequency(data['format'],data['voice'])
+                return jsonify({'status':'success'}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+@app.route('/update/position', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def update_position():
+    if request.method == 'POST':
+       
+        data = request.json 
+        try:
+            if data['format'] and data['voice']:
+                
+                voicetotemplate.position(data['format'],data['voice'])
+                return jsonify({'status':'success'}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
+
+
 
 
 

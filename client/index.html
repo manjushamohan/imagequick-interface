@@ -30,6 +30,7 @@
                 <li class="divider"></li>
                 <li class="has-dropdown"><a href="#">Create</a>
                     <ul class="dropdown">
+                        <li><a ng-click="location.path('/add/user/')">User</a></li>
                         <li><a ng-click="location.path('/add/voice/')">Voice</a></li>
                         <li><a ng-click="location.path('/add/format/')">Format</a></li>
                         <li><a ng-click="location.path('/add/station/')">Station</a></li>
@@ -62,11 +63,11 @@
                     <ul class="dropdown">
                         <li class="has-dropdown"><a href="#">Voice to template</a>
                          <ul class="dropdown">
-                            <li><a ng-click="location.path('/add/sfp/')">sfp</a></li>
-                            <li><a ng-click="location.path('/add/sfp/')">sf</a></li>
-                            <li><a ng-click="location.path('/add/station/')">Station</a></li>
-                            <li><a ng-click="location.path('/add/frequency/')">Frequency</a></li>
-                            <li><a ng-click="location.path('/add/pos_stmt/')">Position Statement</a></li>
+                            <li><a ng-click="location.path('/batch/sfp/')">sfp</a></li>
+                            <li><a ng-click="location.path('/batch/sf/')">sf</a></li>
+                            <li><a ng-click="location.path('/batch/station/')">Station</a></li>
+                            <li><a ng-click="location.path('/batch/frequency/')">Frequency</a></li>
+                            <li><a ng-click="location.path('/batch/pos_stmt/')">Position Statement</a></li>
                           </ul>
                         </li>
                       </ul>

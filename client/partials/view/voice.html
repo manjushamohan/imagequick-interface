@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="voice in voices | filter:filterVoice |limitTo:10">
+            <tr ng-repeat="voice in voices | filter:filterVoice">
                 <td>{{voice.name}}</td>
                 <td>{{voice.description}}</td>
                 
@@ -67,7 +67,7 @@
           </div>
       </div>
       <div class="row">
-        <button class="button small" ng-click="save(editvoice)" type="submit">Done editing</button>
+        <button class="button small" ng-click="save(editvoice)" type="submit">Done</button>
       </div>
   </fieldset>
 </form>

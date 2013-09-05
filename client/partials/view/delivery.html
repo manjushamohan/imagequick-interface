@@ -23,7 +23,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="style in styles | filter:filterStyle | limitTo:10">
+            <tr ng-repeat="style in styles | filter:filterStyle ">
                 <td>{{style.name}}</td>
                 
                 
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="row">
-        <button class="button small" ng-click="save(editstyle)">Edit</button>
+        <button class="button small" ng-click="save(editstyle)">Done</button>
       </div>
       </fieldset>
     </form>

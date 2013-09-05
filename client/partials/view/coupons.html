@@ -25,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="coupon in coupons | filter:filteroupons |limitTo:10">
+            <tr ng-repeat="coupon in coupons | filter:filteroupons">
                 <td>{{coupon.code}}</td>
                 <td>{{coupon.remaininguses}}</td>
                 <td>{{coupon.maxtracks}}</td>
@@ -76,7 +76,7 @@
           </div>
       </div>
       <div class="row">
-        <button class="button small" ng-click="save(editcoupon)" type="submit">Add</button>
+        <button class="button small" ng-click="save(editcoupon)" type="submit">Done</button>
       </div>
   </fieldset>
 </form>

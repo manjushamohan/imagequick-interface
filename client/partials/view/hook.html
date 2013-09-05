@@ -13,7 +13,7 @@
     </div>
     <hr>
     <div class="row">
-        <div class="small-6 columns left" ng-repeat="hook in hooks | filter:filterHook |limitTo:6">
+        <div class="small-6 columns left" ng-repeat="hook in hooks | filter:filterHook ">
             <div class="small-11 panel">
                 <p>
                     
@@ -102,7 +102,7 @@
         </div>
         
          <div class="row">
-        <button class="button small" ng-click="save(edithook)">Add</button>
+        <button class="button small" ng-click="save(edithook)">Done</button>
       </div>
       </fieldset>
     </form>

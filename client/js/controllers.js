@@ -3,6 +3,10 @@ var SERVER_DOMAIN = 'http://localhost:5000'
 //Add no ending slashes.
 /* Controllers */
 
+function UserCtrl($scope) {
+  $scope.name = 'ImageQuick';
+}
+
 
 function HomeCtrl($scope) {
   $scope.name = 'ImageQuick';
@@ -719,7 +723,7 @@ function CouponviewCtrl($scope,$http) {
       console.log(coupon)
       $http.post( SERVER_DOMAIN + "/edit/coupon",coupon).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.code,'success')
+        $.notify("Edited "+data.data.data.code,'success')
         $scope.editcoupon = {}
         $http.get(SERVER_DOMAIN+'/all/coupons/').then(function(response){
         $scope.coupons = response.data.coupons
@@ -759,7 +763,7 @@ function DeliveryviewCtrl($scope,$http) {
       console.log(style)
       $http.post( SERVER_DOMAIN + "/edit/style",style).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.name,'success')
+        $.notify("Edited "+data.data.data.name,'success')
         $scope.editstyle = {}
         $http.get(SERVER_DOMAIN+'/all/styles/').then(function(response){
         $scope.styles = response.data.styles
@@ -799,7 +803,7 @@ function SloganviewCtrl($scope,$http) {
       console.log(slogan)
       $http.post( SERVER_DOMAIN + "/edit/slogan_length",slogan).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.slogan,'success')
+        $.notify("Edited "+data.data.data.slogan,'success')
         $scope.editslogan = {}
         $http.get(SERVER_DOMAIN+'/all/slogans/').then(function(response){
         $scope.slogans = response.data.slogans
@@ -865,7 +869,7 @@ function FormatviewCtrl($scope,$http,VoiceIds) {
       console.log(format)
       $http.post( SERVER_DOMAIN + "/edit/format",format).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.name,'success')
+        $.notify("Edited "+data.data.data.name,'success')
         $scope.editformat = {}
         $http.get(SERVER_DOMAIN+'/all/formats/').then(function(response){
         $scope.formats = response.data.formats;
@@ -1017,7 +1021,7 @@ function PositionviewCtrl($scope,$http,FormatIds) {
       console.log(position)
       $http.post( SERVER_DOMAIN + "/edit/position",position).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.name,'success')
+        $.notify("Edited "+data.data.data.name,'success')
         $scope.editposition = {}
         $http.get(SERVER_DOMAIN+'/all/positions/').then(function(response){
         $scope.positions = response.data.positions;
@@ -1083,7 +1087,7 @@ function StationviewCtrl($scope,$http,FormatIds) {
       console.log(station)
       $http.post( SERVER_DOMAIN + "/edit/station",station).then(function(data){
       if(data.data.status == 'success'){
-        $.notify("Added "+data.data.data.name,'success')
+        $.notify("Edited "+data.data.data.name,'success')
         $scope.editstation = {}
         $http.get(SERVER_DOMAIN+'/all/stations/').then(function(response){
         $scope.stations = response.data.stations;
@@ -1421,5 +1425,121 @@ function TemplateviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoi
   }
 
   
+
+}
+
+function SfpbatchCtrl($scope,$http) {
+  $scope.name = 'SFP';
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $scope.update = function(sfp){
+      console.log(sfp)
+      $http.post( SERVER_DOMAIN + "/update/sfp",sfp).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("updated",'success')
+         
+        }
+        else{
+          $.notify("Error ",'error')
+        }
+      });
+    }
+
+
+}
+
+function SfbatchCtrl($scope,$http) {
+  $scope.name = 'SF';
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $scope.update = function(sf){
+      console.log(sf)
+      $http.post( SERVER_DOMAIN + "/update/sf",sf).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("updated",'success')
+          
+        }
+        else{
+          $.notify("Error ",'error')
+        }
+      });
+    }
+
+}
+
+function StationbatchCtrl($scope,$http) {
+  $scope.name = 'Station';
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $scope.update = function(station){
+      console.log(station)
+      $http.post( SERVER_DOMAIN + "/update/station",station).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("updated",'success')
+          
+        }
+        else{
+          $.notify("Error ",'error')
+        }
+      });
+    }
+
+}
+
+function FrequencybatchCtrl($scope,$http) {
+  $scope.name = 'Frequency';
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $scope.update = function(frequency){
+      console.log(frequency)
+      $http.post( SERVER_DOMAIN + "/update/frequency",frequency).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("updated",'success')
+          
+        }
+        else{
+          $.notify("Error ",'error')
+        }
+      });
+    }
+
+}
+
+function PositionbatchCtrl($scope,$http) {
+  $scope.name = 'Position Statement';
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $scope.update = function(position){
+      console.log(position)
+      $http.post( SERVER_DOMAIN + "/update/position",position).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("updated",'success')
+          
+        }
+        else{
+          $.notify("Error ",'error')
+        }
+      });
+    }
 
 }
