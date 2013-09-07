@@ -19,7 +19,7 @@
             <tr>
                 <th>Station Name</th>
                 
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -27,8 +27,8 @@
             <tr ng-repeat="station in stations | filter:filterStation">
                 <td>{{station.name}}</td>
                
-                
                 <td><span class="button tiny" ng-click="edit(station._id)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(station._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

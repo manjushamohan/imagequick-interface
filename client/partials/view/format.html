@@ -19,7 +19,7 @@
             <tr>
                 <th>Industry Name</th>
                 <th>Real Name</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -29,6 +29,7 @@
                 <td>{{format.realName}}</td>
                 
                 <td><span class="button tiny" ng-click="edit(format.uid)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(format._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

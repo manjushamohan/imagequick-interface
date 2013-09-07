@@ -19,16 +19,17 @@
             <tr>
                 <th>Slogan</th>
                 <th>Length</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="slogan in slogans | filter:filterSlogan">
+            <tr ng-repeat="slogan in slogans | filter:filterSlogan|limitTo:10">
                 <td>{{slogan.slogan}}</td>
                 <td>{{slogan.length}}</td>
                 
                 <td><span class="button tiny" ng-click="edit(slogan._id)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(slogan._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

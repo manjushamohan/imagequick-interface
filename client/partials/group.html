@@ -1,0 +1,61 @@
+<div class="large-12 columns format">
+    <br>
+  <h2>Add Group</h2>
+    <form>
+      <fieldset>
+
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Name</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="iname" ng-model="group.name">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns push-1">
+              <label class="inline">Select Format</label>
+            </div>
+           <div class="small-4 columns pull-5">
+                <select id="customDropdown" class="in" ng-options="format.name for format in formats" ng-model="group.format"></select>
+             
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Associated Voices</label>
+            </div>
+            <div class="small-8 columns pull-1">
+                <label ng-repeat="voice in voices" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value" ng-click="select_voice(voice,value)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{voice.name}}</div></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Associated Templates</label>
+            </div>
+            <div class="small-8 columns pull-1">
+                <label ng-repeat="template in templates" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(template,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{template.name}}</div></label>
+            </div>
+          </div>
+        </div>
+         <div class="row">
+        <button class="button small" ng-click="add(group)">Add</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+ 

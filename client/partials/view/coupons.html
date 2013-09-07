@@ -20,7 +20,7 @@
                 <th>Code</th>
                 <th>Remaining User</th>
                 <th>Max Tracks</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -31,6 +31,7 @@
                 <td>{{coupon.maxtracks}}</td>
                 
                 <td><span class="button tiny" ng-click="edit(coupon._id)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(coupon._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

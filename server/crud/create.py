@@ -87,3 +87,10 @@ def coupon(c):
 		return True
 	else:
 		return False
+
+def group(group):
+	if group['name'] is not None:
+		database.db.groups.insert(group)
+		return True
+	else:
+		return False

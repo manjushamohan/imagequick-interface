@@ -6,6 +6,9 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 
+app.factory('TemplateIds', function () {
+    return []
+})
 app.factory('VoiceIds', function () {
     return []
 })

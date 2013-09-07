@@ -19,7 +19,7 @@
             <tr>
                 <th>Frequency</th>
                 <th>File Name</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -29,6 +29,7 @@
                 <td>{{frequency.filename}}</td>
                 
                 <td><span class="button tiny" ng-click="edit(frequency._id)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(frequency._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

@@ -33,8 +33,36 @@ def get_style_list():
 def get_template_list():
 	templatelist = []
 	for template in database.db.templates.find():
-		templatelist.append(template['name'])
+		s={
+			"_id":template['_id'],
+			"name":template['name']
+		}
+		templatelist.append(s)
 	return templatelist
+
+def get_slogan_list():
+	sloganlist = []
+	for slogan in database.db.postions.find():
+		sloganlist.append(slogan['name'])
+	return sloganlist
+
+def get_station_list():
+	stationlist = []
+	for station in database.db.stations.find():
+		stationlist.append(station['name'])
+	return stationlist
+
+def get_frequency_list():
+	frequencylist = []
+	for frequency in database.db.frequencies.find():
+		frequencylist.append(frequency['frequency'])
+	return frequencylist
+def get_group_list():
+	grouplist = []
+	for group in database.db.groups.find():
+		grouplist.append(group['name'])
+	return grouplist
+
 
 def get_hook_list():
 	hooks = []

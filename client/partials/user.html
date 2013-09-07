@@ -11,13 +11,13 @@
             <label class=" inline">Username</label>
           </div>
           <div class="small-4 columns">
-            <input  type="text" id="">
+            <input  type="text" id="" ng-model="user.username">
           </div>
           <div class="small-2 columns push-1">
             <label class="inline">Password</label>
           </div>
           <div class="small-4 columns">
-            <input  type="text" id="fname">
+            <input  type="text" id="fname" ng-model="user.password">
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
             <label class=" inline">Email</label>
           </div>
           <div class="small-9 columns pull-1">
-            <input  type="text" id="fname" style="width:53em" >
+            <input  type="text" id="fname" style="width:53em" ng-model="user.email">
           </div>
         </div>
       </div>
@@ -44,50 +44,19 @@
             <label class=" inline">Group</label>
           </div>
           <div class="small-2 columns">
-            <select id="" class="">
-              <option></option>
-              <option>Jam</option>
-              <option>Sam</option>
-              <option>Hcountry</option>   
-            </select>
+            <select id="customDropdown"  ng-options="group as group for group in groups" ng-model="user.groups"></select>
           </div>
           <div class="small-2 columns push-1">
             <label class=" inline">Slogan</label>
           </div>
           <div class="small-2 columns">
-            <select name="slogan" id="">
-             <option></option>
-             <option value="a country tradition">a country tradition</option>  
-
-             <option value="all american country">all american country</option>  
-
-             <option value="all new alternative">all new alternative</option>  
-
-             <option value="all new rock">all new rock</option>  
-
-             <option value="all the best country">all the best country</option>  
-
-             <option value="americas best country">americas best country</option> 
-
-           </select>
+            <select id="customDropdown"  ng-options="slogan as slogan for slogan in slogans" ng-model="user.affiliate.slogan"></select>
          </div>
          <div class="small-2 columns push-1">
           <label class=" inline">Station</label>
         </div>
         <div class="small-2 columns ">
-          <select name="station" id="">
-           <option></option>
-           <option value="alice">alice</option>  
-
-           <option value="alice at">alice at</option>  
-
-           <option value="alternative">alternative</option>  
-
-           <option value="b">b</option>  
-
-           <option value="bay fm">bay fm</option>
-
-         </select>
+          <select id="customDropdown"  ng-options="station as station for station in stations" ng-model="user.affiliate.station"></select>
        </div>
 
      </div>
@@ -101,44 +70,20 @@
         <label class=" inline">Frequency</label>
       </div>
       <div class="small-2 columns pull-1">
-        <select name="frequency" id="">
-         <option></option>
-         <option value="88.1">88.1</option>  
-
-         <option value="88-1">88-1</option>  
-
-         <option value="88.3">88.3</option>  
-
-         <option value="88-3">88-3</option>  
-
-         <option value="88.5">88.5</option>  
-
-         <option value="88-5">88-5</option>  
-
-         <option value="88.7">88.7</option>  
-
-         <option value="88-7">88-7</option>  
-
-         <option value="88.9">88.9</option>  
-
-         <option value="88-9">88-9</option>  
-
-         <option value="89">89</option>  
-       </select>
+        <select id="customDropdown"  ng-options="frequency as frequency for frequency in frequencies" ng-model="user.affiliate.frequency"></select>
      </div>
      <div class="small-2 columns">
       <label class="inline">No Of Free Tracks</label>
     </div>
     <div class="small-5 columns">
-      <input type="text" id="fname">
+      <input type="text" id="fname" ng-model="user.affiliate.remaining">
     </div>
   
 
 </div>
-</div>
-
-<span type="submit" class="button small push-5">Submit</span>
-</div>
+<div class="row">
+        <button class="button small" ng-click="add(user)">Add</button>
+      </div>
 </fieldset>
 </form>
 </div>

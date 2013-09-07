@@ -17,8 +17,11 @@ from common import ui_core
 from common import database
 from batch import voicetotemplate
 from analytics import analytics
-from crud import create,edit
+from crud import create,edit,delete
 import  time
+from werkzeug.datastructures import ImmutableOrderedMultiDict
+from werkzeug import secure_filename
+import os 
 #Overriding JSONIFY for MongoIDs
 try: 
     import json 
@@ -31,7 +34,7 @@ try:
 except: 
     pass 
  
- 
+
 class APIEncoder(json.JSONEncoder): 
     def default(self, obj): 
         if isinstance(obj, (datetime.datetime, datetime.date)): 
@@ -46,6 +49,45 @@ def jsonify(data):
     return Response(json.dumps(data, cls=APIEncoder),mimetype='application/json') 
 
 app = Flask(__name__)
+UPLOAD_FOLDER = '/var/uploads/'
+ALLOWED_EXTENSIONS = set(['txt', 'json', 'csv', 'jpg', 'jpeg', 'gif','pdf'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+def create_user(username, password, email):
+    if database.db.users.find_one({'username': username}) is not None:
+        return {
+            'status': 'fail',
+            'message': "Username already exists! Please use a diffrent username"
+        }
+    elif database.db.users.find_one({'email': email}) is not None:
+        return {
+            'status': 'fail',
+            'message': "Email already registered! Please reset you password if you can't access your account"
+        }
+    else:
+        #todo: Station, Frequecy and Slogan, zipcode ( Possibly ids)
+        user = {
+            'username': username,
+            'email': email,
+            'password': hashlib.sha1(password).hexdigest(),
+            'groups': [],
+            'tracks': [],
+            'affiliate': {
+                'station': '',
+                'slogan': '',
+                'frequency': '',
+                'remaining': 10
+            }
+        }
+        database.db.users.insert(user)
+        return {
+            'status': 'success',
+            'message': None
+        }
 
 
 def crossdomain(origin=None, methods=None, headers=None,
@@ -145,6 +187,27 @@ def requires_auth(f):
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def get_voices():
     return jsonify({'voices':ui_core.get_voice_list()})
+
+
+@app.route('/get/slogans/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_slogans():
+    return jsonify({'slogans':ui_core.get_slogan_list()})
+
+@app.route('/get/stations/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_stations():
+    return jsonify({'stations':ui_core.get_station_list()})
+
+@app.route('/get/frequency/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_frequency():
+    return jsonify({'frequencies':ui_core.get_frequency_list()})
+
+@app.route('/get/groups/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_groups():
+    return jsonify({'groups':ui_core.get_group_list()})
 
 
 
@@ -282,6 +345,28 @@ def add_style():
 
 
 
+@app.route('/add/group', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def add_group():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['voices'] and data['format'] and data['templates']:
+                
+                data['format'] = int(data['format'])
+                create.group(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+
 
 
 
@@ -326,7 +411,6 @@ def add_hook():
             return jsonify({'status':'fail','message':'Missing data for some field'})  
     else:
         pass
-
 
 @app.route('/add/voice', methods=['POST'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -852,6 +936,8 @@ def edit_template():
         pass
 
 
+#All Update Functions Goes in here 
+
 @app.route('/update/sfp', methods=['POST'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def update_sfp():
@@ -943,7 +1029,164 @@ def update_position():
         pass
 
 
+#All Delete Functions Goes in here 
 
+@app.route('/delete/coupon', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_coupon():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.coupon(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/style', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_style():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.style(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/format', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_format():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.format(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/frequency', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_frequency():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.frequency(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/hooktemplate', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_hooktemplate():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.hooktemplate(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/template', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_template():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.template(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/slogan_length', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_slogan_length():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.slogan_length(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/station', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_station():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.station(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/voice', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_voice():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.voice(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/position', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_position():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.position(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass 
+
+@app.route('/delete/hook', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_hook():
+    if request.method == 'POST':
+        try:
+            data=request.json
+            id=data['_id']
+            lid=data['length']['_id']
+            vid=data['volength']['_id']
+            delete.hook(id,lid,vid)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass     
 
 
 
@@ -1001,6 +1244,71 @@ def view_tempaltes_imaging():
     return jsonify({'templates':t})
 
 
+
+@app.route('/utilities/import/hooks/lengths',methods=['GET','POST'])
+def import_hook_lengths():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            #import_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            #command = ['mongoimport', '-h', db_ip, '-d', 'imagequick_dev', '-c', 'hook_lengths', '--type', 'csv', '--fields', 'file,length', '--drop',import_file]
+            #out = check_output(command)
+            #print " ".join(command)
+            #print out
+            return str(out)
+    return '''
+    <!doctype html>
+    <title>Upload CSV file to import HOOK LENGTHS</title>
+    <h1>Upload CSV for Hook Lengths</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
+
+
+@app.route('/utilities/import/hooks/titles',methods=['GET','POST'])
+def import_hooks():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            #import_file = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            #command = ['mongoimport', '-h', db_ip, '-d', 'imagequick_dev', '-c', 'hooks', '--type', 'csv', '--fields', 'hook,format,category', '--drop',import_file]
+            #out = check_output(command)
+            #print " ".join(command)
+            #print out
+            return str(out)
+    return '''
+    <!doctype html>
+    <title>Upload CSV file to import Hook Titles</title>
+    <h1>Upload CSV for Hook Titles</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
+
+@app.route('/backend/create_user', methods=['GET', 'POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def add_user():
+        if request.method == 'POST':
+            data = request.json
+            if create_user(data['username'], data['password'], data['email'])['status'] == 'success':
+                user = database.db.users.find_one({'email': data['email']})
+                user['affiliate']['station'] = data['station']
+                user['affiliate']['slogan'] = data['slogan']
+                user['affiliate']['frequency'] = data['frequency']
+                user['affiliate']['remaining'] = int(data['remaining'])
+                user['groups'].append(data['group'])
+                database.db.users.save(user)
+            else:
+                return Response('Username/Email Already Found')
+            return render_template('affliateconfirmation.html', data=data)
+        
 
 
 

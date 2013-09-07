@@ -19,7 +19,7 @@
             <tr>
                 <th>Voice Name</th>
                 <th>Description</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -27,8 +27,8 @@
             <tr ng-repeat="voice in voices | filter:filterVoice">
                 <td>{{voice.name}}</td>
                 <td>{{voice.description}}</td>
-                
                 <td><span class="button tiny" ng-click="edit(voice.uid)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(voice._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>

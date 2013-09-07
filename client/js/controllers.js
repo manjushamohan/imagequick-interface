@@ -3,10 +3,109 @@ var SERVER_DOMAIN = 'http://localhost:5000'
 //Add no ending slashes.
 /* Controllers */
 
-function UserCtrl($scope) {
+function UserCtrl($scope,$http) {
   $scope.name = 'ImageQuick';
-}
 
+  $http.get(SERVER_DOMAIN+'/get/slogans/').then(function(response){
+     $scope.slogans = response.data.slogans
+    })
+  $http.get(SERVER_DOMAIN+'/get/stations/').then(function(response){
+     $scope.stations = response.data.stations
+    })
+  $http.get(SERVER_DOMAIN+'/get/frequency/').then(function(response){
+     $scope.frequencies = response.data.frequencies
+    })
+  $http.get(SERVER_DOMAIN+'/get/groups/').then(function(response){
+     $scope.groups = response.data.groups
+    })
+
+  $scope.add = function(user){
+    console.log(user)
+    $http.post( SERVER_DOMAIN + "/backend/create_user",user).then(function(data){
+       $.notify("Added",'success')
+       
+      });
+
+  }
+}
+function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
+  $scope.name = 'ImageQuick';
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $http.get(SERVER_DOMAIN+'/get/templates/').then(function(response){
+     $scope.templates = response.data.templates
+    })
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+
+  $scope.select_voice=function(voice,value){
+     if(value==true){
+          
+          
+         VoiceIds.push(voice.name);
+         console.log(VoiceIds)
+      
+     }
+     else{
+          
+          var index=VoiceIds.indexOf(voice.name)
+           VoiceIds.splice(index,1);  
+
+          
+          console.log(VoiceIds)
+          
+     }
+    }
+
+    $scope.select_template=function(template,value1){
+     if(value1==true){
+          
+          
+         TemplateIds.push(template._id);
+         console.log(TemplateIds)
+      
+     }
+     else{
+          
+          var index=TemplateIds.indexOf(template._id)
+           TemplateIds.splice(index,1);  
+
+          
+          console.log(TemplateIds)
+          
+     }
+    }
+
+    $scope.add = function(group){
+      
+      group.voices=VoiceIds;
+      group.templates=TemplateIds;
+     group['format']=group.format['uid'];
+
+      console.log(group)
+      $http.post( SERVER_DOMAIN + "/add/group",group).then(function(data){
+        if(data.data.status == 'success'){
+          $.notify("Added "+data.data.data.name,'success')
+          $scope.group = {}
+          
+
+        }
+        else{
+          $.notify("Error adding "+group.name,'error')
+        }
+      });
+
+     
+    }
+
+
+
+    VoiceIds=[];
+    TemplateIds=[];
+
+}
 
 function HomeCtrl($scope) {
   $scope.name = 'ImageQuick';
@@ -701,6 +800,19 @@ function VoiceviewCtrl($scope,$http) {
 
   }
 
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/voice",id).then(function(data){
+        $http.get(SERVER_DOMAIN+'/all/voices/').then(function(response){
+        $scope.voices = response.data.voices
+    })
+            
+       })
+
+    }
+  }
+
   
 
 }
@@ -738,7 +850,18 @@ function CouponviewCtrl($scope,$http) {
 
     }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/coupon",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/coupons/').then(function(response){
+     $scope.coupons = response.data.coupons
+    })
+
+       
+      })
+    }
+  }
 
   
 
@@ -781,7 +904,18 @@ function DeliveryviewCtrl($scope,$http) {
     }
 
   
+    $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/style",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/styles/').then(function(response){
+     $scope.styles = response.data.styles
+    })
 
+       
+      })
+    }
+  }
   
 
 }
@@ -820,18 +954,27 @@ function SloganviewCtrl($scope,$http) {
     }
 
   }
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+         $http.post( SERVER_DOMAIN + "/delete/slogan_length",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/slogans/').then(function(response){
+        $scope.slogans = response.data.slogans
+    })
 
+       
+      })
+    }
+  }
   
 
 }
 
+
 function FormatviewCtrl($scope,$http,VoiceIds) {
   $http.get(SERVER_DOMAIN+'/all/formats/').then(function(response){
      $scope.formats = response.data.formats;
-      
-
-     
-    })
+       })
   $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
      $scope.voices = response.data.voices
     })
@@ -890,7 +1033,16 @@ function FormatviewCtrl($scope,$http,VoiceIds) {
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/format",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/formats/').then(function(response){
+     $scope.formats = response.data.formats;
+       })
+    })
+    }
+  }
 
 }
 
@@ -932,7 +1084,16 @@ function FrequencyviewCtrl($scope,$http) {
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+        $http.post( SERVER_DOMAIN + "/delete/frequency",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/frequencies/').then(function(response){
+        $scope.frequencies = response.data.frequencies
+    })
+    })
+    }
+  }
 
 }
 
@@ -976,7 +1137,28 @@ function HookviewCtrl($scope,$http) {
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+    $http.get(SERVER_DOMAIN+'/gets/hook/'+id).then(function(response){
+    
+     $scope.hook=response.data.hook
+     
+      console.log($scope.hook)
+      $http.post( SERVER_DOMAIN + "/delete/hook",$scope.hook).then(function(data){
+        if(data.data.status == 'success'){
+        $.notify("Edited ",'success')
+        $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
+        $scope.hooks = response.data.hooks
+      })
+      }
+      else{
+        $.notify("Error",'error')
+      }
+      })
+    })
+    }
+  }
 
 }
 
@@ -985,10 +1167,7 @@ function HookviewCtrl($scope,$http) {
 function PositionviewCtrl($scope,$http,FormatIds) {
   $http.get(SERVER_DOMAIN+'/all/positions/').then(function(response){
      $scope.positions = response.data.positions;
-      
-
-     
-    })
+      })
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -1042,7 +1221,16 @@ function PositionviewCtrl($scope,$http,FormatIds) {
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+        $http.post( SERVER_DOMAIN + "/delete/position",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/positions/').then(function(response){
+     $scope.positions = response.data.positions;
+      })
+    })
+    }
+  }
 
 }
 
@@ -1051,10 +1239,7 @@ function PositionviewCtrl($scope,$http,FormatIds) {
 function StationviewCtrl($scope,$http,FormatIds) {
   $http.get(SERVER_DOMAIN+'/all/stations/').then(function(response){
      $scope.stations = response.data.stations;
-      
-
-     
-    })
+       })
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -1107,7 +1292,16 @@ function StationviewCtrl($scope,$http,FormatIds) {
     }
 
   }
-
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/station",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/stations/').then(function(response){
+     $scope.stations = response.data.stations;
+       })
+    })
+    }
+  }
   
 
 }
@@ -1266,7 +1460,16 @@ function HooktempviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoi
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+        $http.post( SERVER_DOMAIN + "/delete/hooktemplate",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/hooktemps/').then(function(response){
+     $scope.hooktemps = response.data.hooktemps
+    })
+    })
+    }
+  }
 
 }
 
@@ -1424,9 +1627,20 @@ function TemplateviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoi
 
   }
 
-  
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/template",id).then(function(response){
+       $http.get(SERVER_DOMAIN+'/all/templates/').then(function(response){
+     $scope.templates = response.data.templates
+    })
+    })
+    }
+  }
 
 }
+
+
 
 function SfpbatchCtrl($scope,$http) {
   $scope.name = 'SFP';

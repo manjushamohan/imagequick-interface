@@ -18,16 +18,15 @@
             <thead>
             <tr>
                 <th>Delivery Style</th>
-                
+                <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="style in styles | filter:filterStyle ">
                 <td>{{style.name}}</td>
-                
-                
                 <td><span class="button tiny" ng-click="edit(style.uid)">Edit</span></td>
+                <td><span class="button tiny" ng-click="delete(style._id)">Delete</span></td>
             </tr>
             </tbody>
         </table>
