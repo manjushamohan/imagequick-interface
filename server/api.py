@@ -1257,7 +1257,8 @@ def import_hook_lengths():
             #out = check_output(command)
             #print " ".join(command)
             #print out
-            return str(out)
+            #return str(out)
+            return "Success"
     return '''
     <!doctype html>
     <title>Upload CSV file to import HOOK LENGTHS</title>
@@ -1281,7 +1282,8 @@ def import_hooks():
             #out = check_output(command)
             #print " ".join(command)
             #print out
-            return str(out)
+            #return str(out)
+            return "Success"
     return '''
     <!doctype html>
     <title>Upload CSV file to import Hook Titles</title>

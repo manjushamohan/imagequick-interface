@@ -111,6 +111,14 @@ function HomeCtrl($scope) {
   $scope.name = 'ImageQuick';
 }
 
+function HookTCtrl($scope) {
+  $scope.name = 'ImageQuick';
+}
+
+function HookLCtrl($scope) {
+  $scope.name = 'ImageQuick';
+}
+
 
 function BillmCtrl($scope) {
   $scope.name = 'BillmCtrl';

@@ -79,6 +79,10 @@ app.config(['$httpProvider', function($httpProvider) {
     $routeProvider.when('/batch/frequency', {templateUrl: 'partials/sfp.html', controller: 'FrequencybatchCtrl'});
     $routeProvider.when('/batch/pos_stmt', {templateUrl: 'partials/sfp.html', controller: 'PositionbatchCtrl'});
 
+    //$routeProvider.when('/import/hooks/titles', {templateUrl: 'partials/hookt.html'});
+    //$routeProvider.when('/import/hooks/length', {templateUrl: 'partials/hookl.html'});
+    
+
 
 
     $routeProvider.otherwise({redirectTo: '/'});
