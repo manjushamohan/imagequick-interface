@@ -23,6 +23,7 @@ function UserCtrl($scope,$http) {
     console.log(user)
     $http.post( SERVER_DOMAIN + "/backend/create_user",user).then(function(data){
        $.notify("Added",'success')
+       $scope.user={};
        
       });
 
@@ -777,6 +778,171 @@ function TemplateImagingViewCtrl($http,$scope){
 
 
 
+function UserviewCtrl($scope,$http) {
+  $scope.name = 'ImageQuick';
+  $http.get(SERVER_DOMAIN+'/get/slogans/').then(function(response){
+     $scope.slogans = response.data.slogans
+    })
+  $http.get(SERVER_DOMAIN+'/get/stations/').then(function(response){
+     $scope.stations = response.data.stations
+    })
+  $http.get(SERVER_DOMAIN+'/get/frequency/').then(function(response){
+     $scope.frequencies = response.data.frequencies
+    })
+  $http.get(SERVER_DOMAIN+'/get/groups/').then(function(response){
+     $scope.groups = response.data.groups
+    })
+  $http.get(SERVER_DOMAIN+'/all/users/').then(function(response){
+     $scope.users = response.data.users;
+       })
+  $scope.edit=function(id){
+   $('#edituser').foundation('reveal', 'open'); 
+   $http.get(SERVER_DOMAIN+'/gets/user/'+id).then(function(response){
+     $scope.edituser=response.data.user;
+     })
+    $scope.save=function(user){
+      console.log(user)
+       $http.post( SERVER_DOMAIN + "/edit/user",user).then(function(data){
+      if(data.data.status == 'success'){
+        $.notify("Edited "+data.data.data.username,'success')
+        $scope.edituser = {}
+        $http.get(SERVER_DOMAIN+'/all/users/').then(function(response){
+        $scope.users = response.data.users
+    })
+      }
+      else{
+        $.notify("Error adding "+user.username,'error')
+      }
+    });
+    $('#edituser').foundation('reveal', 'close');
+
+    
+    }
+  }
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/user",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/users/').then(function(response){
+        $scope.users = response.data.users;
+       })
+    })
+    }
+  }
+
+}
+
+
+function GroupviewCtrl($scope,$http,VoiceIds,TemplateIds) {
+  $http.get(SERVER_DOMAIN+'/all/groups/').then(function(response){
+     $scope.groups = response.data.groups;
+       })
+  $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+     $scope.voices = response.data.voices
+    })
+  $http.get(SERVER_DOMAIN+'/get/templates/').then(function(response){
+     $scope.templates = response.data.templates
+    })
+  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+     $scope.formats = response.data.formats
+    })
+  
+  $scope.select_voice=function(voice,value){
+     if(value==true){
+          
+          
+         VoiceIds.push(voice.name);
+         console.log(VoiceIds)
+      
+     }
+     else{
+          
+          var index=VoiceIds.indexOf(voice.name)
+           VoiceIds.splice(index,1);  
+
+          
+          console.log(VoiceIds)
+          
+     }
+    }
+    $scope.select_template=function(template,value1){
+     if(value1==true){
+          
+          
+         TemplateIds.push(template._id);
+         console.log(TemplateIds)
+      
+     }
+     else{
+          
+          var index=TemplateIds.indexOf(template._id)
+           TemplateIds.splice(index,1);  
+
+          
+          console.log(TemplateIds)
+          
+     }
+    }
+
+  $scope.edit=function(id){
+    var fid;
+    console.log(id)
+    $('#editgroup').foundation('reveal', 'open');
+    $http.get(SERVER_DOMAIN+'/gets/group/'+id).then(function(response){
+     $scope.editgroup=response.data.group;
+     VoiceIds=$scope.editgroup.voices;
+     fid=$scope.editgroup.format;
+     TemplateIds=$scope.editgroup.templates;
+     console.log(VoiceIds)
+     console.log(TemplateIds)
+    })
+
+    $scope.save=function(group){
+      console.log(fid)
+      group.voices=VoiceIds;
+      group.templates=TemplateIds;
+      if(group['format']!=fid){
+        group['format']=group.format['uid'];
+      }
+      console.log(group)
+      $http.post( SERVER_DOMAIN + "/edit/group",group).then(function(data){
+      if(data.data.status == 'success'){
+        $.notify("Edited "+data.data.data.name,'success')
+        $scope.editgroup = {}
+        $http.get(SERVER_DOMAIN+'/all/groups/').then(function(response){
+        $scope.groups = response.data.groups;
+      
+
+     
+    })
+        
+      }
+      else{
+        $.notify("Error adding "+group.name,'error')
+      }
+    });
+    
+    $('#editgroup').foundation('reveal', 'close');
+
+    }
+
+  }
+
+  $scope.delete=function(id){
+    var d=window.confirm('Are you sure want to delete ');
+    if (d){
+      $http.post( SERVER_DOMAIN + "/delete/group",id).then(function(response){
+        $http.get(SERVER_DOMAIN+'/all/groups/').then(function(response){
+     $scope.groups = response.data.groups;
+       })
+    })
+    }
+  }
+
+}
+
+
+
 function VoiceviewCtrl($scope,$http) {
   $http.get(SERVER_DOMAIN+'/all/voices/').then(function(response){
      $scope.voices = response.data.voices
@@ -1115,30 +1281,32 @@ function HookviewCtrl($scope,$http) {
     })
 
   $scope.edit=function(id){
+    var fname;
     console.log(id)
     $('#edithook').foundation('reveal', 'open');
     $http.get(SERVER_DOMAIN+'/gets/hook/'+id).then(function(response){
     console.log(response.data.hook)
      $scope.edithook=response.data.hook
+     fname=$scope.edithook.format
     })
 
     $scope.save=function(hook){
-      hook['format']=hook.format['name'];
+      if(hook['format']!=fname){
+        hook['format']=hook.format['name'];
+      }
       console.log(hook)
-      $http.post( SERVER_DOMAIN + "/edit/hook",hook).then(function(data){
+    $http.post( SERVER_DOMAIN + "/edit/hook",hook).then(function(data){
       if(data.data.status == 'success'){
         $.notify("Edited "+data.data.data.hook,'success')
         $scope.edithook = {}
         $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
-     $scope.hooks = response.data.hooks
-    })
-
+          $scope.hooks = response.data.hooks
+        })
       }
       else{
         $.notify("Error adding "+hook.hook,'error')
       }
     });
-    
     $('#edithook').foundation('reveal', 'close');
 
     }

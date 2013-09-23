@@ -62,11 +62,14 @@ def hook(id,lid,vid):
 	database.db.hook_lengths.remove( { '_id' : vid } )
 	return True
 
-
+def group(id):
+	id=ObjectId(id)
+	database.db.groups.remove( { '_id' : id } )
+	return True
 
 
 
 def user(id):
 	id=ObjectId(id)
-	database.db.frequencies.remove( { '_id' : id } )
+	database.db.users.remove( { '_id' : id } )
 	return True

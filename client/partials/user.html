@@ -50,13 +50,13 @@
             <label class=" inline">Slogan</label>
           </div>
           <div class="small-2 columns">
-            <select id="customDropdown"  ng-options="slogan as slogan for slogan in slogans" ng-model="user.affiliate.slogan"></select>
+            <select id="customDropdown"  ng-options="slogan as slogan for slogan in slogans" ng-model="user.slogan"></select>
          </div>
          <div class="small-2 columns push-1">
           <label class=" inline">Station</label>
         </div>
         <div class="small-2 columns ">
-          <select id="customDropdown"  ng-options="station as station for station in stations" ng-model="user.affiliate.station"></select>
+          <select id="customDropdown"  ng-options="station as station for station in stations" ng-model="user.station"></select>
        </div>
 
      </div>
@@ -70,13 +70,13 @@
         <label class=" inline">Frequency</label>
       </div>
       <div class="small-2 columns pull-1">
-        <select id="customDropdown"  ng-options="frequency as frequency for frequency in frequencies" ng-model="user.affiliate.frequency"></select>
+        <select id="customDropdown"  ng-options="frequency as frequency for frequency in frequencies" ng-model="user.frequency"></select>
      </div>
      <div class="small-2 columns">
       <label class="inline">No Of Free Tracks</label>
     </div>
     <div class="small-5 columns">
-      <input type="text" id="fname" ng-model="user.affiliate.remaining">
+      <input type="text" id="fname" ng-model="user.remaining">
     </div>
   
 

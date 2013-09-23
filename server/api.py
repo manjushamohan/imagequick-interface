@@ -579,6 +579,37 @@ def add_template():
 
 
 #All View Functions Goes in here 
+@app.route('/all/users/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def users():
+    return jsonify({'users':ui_core.get_users()})
+
+@app.route('/gets/user/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def user(id):
+    return jsonify({'user':ui_core.get_user(id)})
+
+@app.route('/edit/user', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_user():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['username'] and data['email']:
+                
+                edit.user(data) 
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+    else:
+        pass
+
+
+
 
 @app.route('/all/voices/', methods=['GET'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -936,6 +967,42 @@ def edit_template():
         pass
 
 
+
+@app.route('/all/groups/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def groups():
+    return jsonify({'groups':ui_core.get_groups()})
+
+@app.route('/gets/group/<id>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def group(id):
+    return jsonify({'group':ui_core.get_group(id)})
+
+
+@app.route('/edit/group', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def edit_group():
+    if request.method == 'POST':
+       
+        data = request.json # This gets all json data posted here ,ie the data on top
+        #Do some double checking verifications
+        try:
+            if data['name'] and data['voices'] and data['format'] and data['templates']:
+                
+                data['format'] = int(data['format'])
+                
+                edit.group(data)
+                return jsonify({'status':'success','data':data}) # Pick this data using Angular
+            else:
+                return jsonify({'status':'fail','message':'Missing data for some field'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})  
+    else:
+        pass
+
+
+
+
 #All Update Functions Goes in here 
 
 @app.route('/update/sfp', methods=['POST'])
@@ -1030,6 +1097,34 @@ def update_position():
 
 
 #All Delete Functions Goes in here 
+
+@app.route('/delete/user', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_user():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.user(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
+
+@app.route('/delete/group', methods=['POST'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def delete_group():
+    if request.method == 'POST':
+        try:
+            data=request.data
+            delete.group(data)
+            return jsonify({'status':'success'})
+        except:
+            return jsonify({'status':'fail','message':'Missing data for some field'})
+           
+    else:
+        pass
 
 @app.route('/delete/coupon', methods=['POST'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -1299,14 +1394,17 @@ def import_hooks():
 def add_user():
         if request.method == 'POST':
             data = request.json
-            if create_user(data['username'], data['password'], data['email'])['status'] == 'success':
+            a=create_user(data['username'], data['password'], data['email'])
+            print a
+            if a['status'] == 'success':
                 user = database.db.users.find_one({'email': data['email']})
                 user['affiliate']['station'] = data['station']
                 user['affiliate']['slogan'] = data['slogan']
                 user['affiliate']['frequency'] = data['frequency']
                 user['affiliate']['remaining'] = int(data['remaining'])
-                user['groups'].append(data['group'])
+                user['groups'].append(data['groups'])
                 database.db.users.save(user)
+                return jsonify({'status':'success'})
             else:
                 return Response('Username/Email Already Found')
             return render_template('affliateconfirmation.html', data=data)

@@ -239,3 +239,25 @@ def get_template(id):
 	template['freVoiceids']=[int(x) for x in template['freVoiceids']]
 	template['freStyleids']=[int(x) for x in template['freStyleids']]
 	return template
+
+
+def get_groups():
+	grouplist = []
+	for group in database.db.groups.find():
+		grouplist.append(group)
+	return grouplist
+def get_group(id):
+	id=ObjectId(id)
+	group=database.db.groups.find_one({'_id':id})
+	
+	return group
+
+def get_users():
+	userlist=[]
+	for user in database.db.users.find():
+		userlist.append(user)
+	return userlist
+def get_user(id):
+	id=ObjectId(id)
+	user=database.db.users.find_one({'_id':id})
+	return user

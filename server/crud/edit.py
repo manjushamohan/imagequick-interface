@@ -89,3 +89,13 @@ def template(template):
 	template['_id']=ObjectId(template['_id'])
 	database.db.templates.save(template)
 	return True
+
+def group(group):
+	group['_id']=ObjectId(group['_id'])
+	database.db.groups.save(group)
+	return True
+
+def user(user):
+	user['_id']=ObjectId(user['_id'])
+	database.db.users.save(user)
+	return True
