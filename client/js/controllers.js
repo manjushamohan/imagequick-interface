@@ -1599,7 +1599,7 @@ function HooktempviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoi
      $scope.edithooktemp=response.data.hooktemp
       FormatIds=$scope.edithooktemp.formatids;
       PosVoiceIds=$scope.edithooktemp.posVoiceids;
-      PosStyleIds=$scope.edithooktemp.posVoiceids;
+      PosStyleIds=$scope.edithooktemp.posStyleids;
       FreVoiceIds=$scope.edithooktemp.freVoiceids;
       FreStyleIds=$scope.edithooktemp.freStyleids;
       StatVoiceIds=$scope.edithooktemp.statVoiceids;
@@ -1766,7 +1766,7 @@ function TemplateviewCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoi
      $scope.edittemplate=response.data.template
       FormatIds=$scope.edittemplate.formatids;
       PosVoiceIds=$scope.edittemplate.posVoiceids;
-      PosStyleIds=$scope.edittemplate.posVoiceids;
+      PosStyleIds=$scope.edittemplate.posStyleids;
       FreVoiceIds=$scope.edittemplate.freVoiceids;
       FreStyleIds=$scope.edittemplate.freStyleids;
       StatVoiceIds=$scope.edittemplate.statVoiceids;
