@@ -1,5 +1,5 @@
 'use strict';
-var SERVER_DOMAIN = 'http://localhost:5000'
+var SERVER_DOMAIN = 'http://image-quick.com/admin-api'
 //Add no ending slashes.
 /* Controllers */
 
