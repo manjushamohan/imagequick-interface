@@ -35,6 +35,7 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
      $scope.voices = response.data.voices
     })
   $http.get(SERVER_DOMAIN+'/get/templates/').then(function(response){
+    console.log(response.data.templates)
      $scope.templates = response.data.templates
     })
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){

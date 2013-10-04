@@ -35,7 +35,8 @@ def get_template_list():
 	for template in database.db.templates.find():
 		s={
 			"_id":template['_id'],
-			"name":template['name']
+			"name":template['name'],
+			"formatids":template['formatids']
 		}
 		templatelist.append(s)
 	return templatelist

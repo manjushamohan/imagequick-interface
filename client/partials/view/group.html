@@ -88,7 +88,7 @@
               <label>Associated Templates</label>
             </div>
             <div class="small-8 columns pull-1">
-                <label ng-repeat="template in templates" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(template,value1)" ng-checked="editgroup.templates.indexOf(template._id) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{template.name}}</div></label>
+                <label ng-repeat="template in templates" ng-show="(template.formatids[0]==editgroup.format.uid)" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(template,value1)" ng-checked="editgroup.templates.indexOf(template._id) > -1"><span class="custom checkbox"></span>&nbsp;&nbsp;{{template.name}}</div></label>
             </div>
           </div>
         </div>
