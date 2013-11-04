@@ -29,7 +29,16 @@ def get_style_list():
 		}
 		stylelist.append(s)
 	return stylelist
-
+def get_hooktemplate_list():
+	hooktemplatelist = []
+	for hooktemplate in database.db.hook_templates.find():
+		s={
+			"_id":hooktemplate['_id'],
+			"name":hooktemplate['name'],
+			"formatids":hooktemplate['formatids']
+		}
+		hooktemplatelist.append(s)
+	return hooktemplatelist
 def get_template_list():
 	templatelist = []
 	for template in database.db.templates.find():

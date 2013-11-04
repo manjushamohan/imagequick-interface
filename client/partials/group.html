@@ -38,7 +38,17 @@
             </div>
           </div>
         </div>
-
+         <div class="row">
+          <div class="small-12 columns">
+            
+            <div class="small-3 columns push-1">
+              <label>Hook Templates</label>
+            </div>
+            <div class="small-8 columns pull-1">
+                <label  ng-repeat="hooktemplate in hooktemplates"><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(hooktemplate,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{hooktemplate.name}}</div></label>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="small-12 columns">
             
@@ -46,10 +56,11 @@
               <label>Associated Templates</label>
             </div>
             <div class="small-8 columns pull-1">
-                <label  ng-repeat="template in templates" ng-show="(template.formatids[0]==group.format.uid)" ><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(template,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{template.name}}</div></label>
+                <label  ng-repeat="template in templates"><div class="small-4 columns"><input type="checkbox" id="" ng-model="value1" ng-click="select_template(template,value1)"><span class="custom checkbox"></span>&nbsp;&nbsp;{{template.name}}</div></label>
             </div>
           </div>
         </div>
+       
          <div class="row">
         <button class="button small" ng-click="add(group)">Add</button>
       </div>

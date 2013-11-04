@@ -216,6 +216,10 @@ def get_groups():
 def get_styles():
     return jsonify({'styles':ui_core.get_style_list()})
 
+@app.route('/get/hooktemplates/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_hooktemplates():
+    return jsonify({'hooktemplates':ui_core.get_hooktemplate_list()})
 
 
 @app.route('/get/templates/', methods=['GET'])

@@ -31,17 +31,21 @@ function UserCtrl($scope,$http) {
 }
 function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
   $scope.name = 'ImageQuick';
+  $scope.hooktemps=[];
+  $scope.temps=[];
   $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
      $scope.voices = response.data.voices
     })
   $http.get(SERVER_DOMAIN+'/get/templates/').then(function(response){
-    console.log(response.data.templates)
-     $scope.templates = response.data.templates
+    $scope.temps = response.data.templates
+    })
+  $http.get(SERVER_DOMAIN+'/get/hooktemplates/').then(function(response){
+    $scope.hooktemps = response.data.hooktemplates
     })
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
-
+  
   $scope.select_voice=function(voice,value){
      if(value==true){
           
@@ -62,6 +66,7 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
     }
 
     $scope.select_template=function(template,value1){
+      console.log(template)
      if(value1==true){
           
           
@@ -79,7 +84,25 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
           
      }
     }
-
+    $scope.$watch('group.format', function(newVal, oldVal) {
+      $scope.hooktemplates=[];
+      $scope.templates=[];
+      console.log(newVal, oldVal);
+      for(var i=0;i<$scope.hooktemps.length;i++){
+          for(var j=0;j<$scope.hooktemps[i].formatids.length;j++){
+            if(newVal.uid==$scope.hooktemps[i].formatids[j]){
+              $scope.hooktemplates.push($scope.hooktemps[i])
+            }
+          }
+      }
+      for(var i=0;i<$scope.temps.length;i++){
+        for(var j=0;j<$scope.temps[i].formatids.length;j++){
+          if(newVal.uid==$scope.temps[i].formatids[j]){
+            $scope.templates.push($scope.temps[i])
+          }
+        }
+      }
+    });
     $scope.add = function(group){
       
       group.voices=VoiceIds;
