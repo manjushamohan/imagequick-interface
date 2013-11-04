@@ -119,6 +119,7 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
         }
         else{
           $.notify("Error adding "+group.name,'error')
+          TemplateIds=[];
         }
       });
 
@@ -858,6 +859,8 @@ function UserviewCtrl($scope,$http) {
 
 
 function GroupviewCtrl($scope,$http,VoiceIds,TemplateIds) {
+  $scope.temps=[];
+  $scope.hooktemps=[];
   $http.get(SERVER_DOMAIN+'/all/groups/').then(function(response){
      $scope.groups = response.data.groups;
        })
@@ -865,12 +868,33 @@ function GroupviewCtrl($scope,$http,VoiceIds,TemplateIds) {
      $scope.voices = response.data.voices
     })
   $http.get(SERVER_DOMAIN+'/get/templates/').then(function(response){
-     $scope.templates = response.data.templates
+     $scope.temps = response.data.templates
+    })
+  $http.get(SERVER_DOMAIN+'/get/hooktemplates/').then(function(response){
+     $scope.hooktemps = response.data.hooktemplates
     })
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
-  
+  $scope.$watch('editgroup.format', function(newVal, oldVal) {
+      $scope.hooktemplates=[];
+      $scope.templates=[];
+      console.log(newVal, oldVal);
+      for(var i=0;i<$scope.hooktemps.length;i++){
+          for(var j=0;j<$scope.hooktemps[i].formatids.length;j++){
+            if(newVal==$scope.hooktemps[i].formatids[j]||newVal.uid==$scope.hooktemps[i].formatids[j]){
+              $scope.hooktemplates.push($scope.hooktemps[i])
+            }
+          }
+      }
+      for(var i=0;i<$scope.temps.length;i++){
+        for(var j=0;j<$scope.temps[i].formatids.length;j++){
+          if(newVal==$scope.temps[i].formatids[j]||newVal.uid==$scope.temps[i].formatids[j]){
+            $scope.templates.push($scope.temps[i])
+          }
+        }
+      }
+    });
   $scope.select_voice=function(voice,value){
      if(value==true){
           
@@ -910,18 +934,16 @@ function GroupviewCtrl($scope,$http,VoiceIds,TemplateIds) {
 
   $scope.edit=function(id){
     var fid;
-    console.log(id)
     $('#editgroup').foundation('reveal', 'open');
     $http.get(SERVER_DOMAIN+'/gets/group/'+id).then(function(response){
      $scope.editgroup=response.data.group;
      VoiceIds=$scope.editgroup.voices;
      fid=$scope.editgroup.format;
      TemplateIds=$scope.editgroup.templates;
-     console.log(VoiceIds)
-     console.log(TemplateIds)
-    })
+     })
 
     $scope.save=function(group){
+      console.log(group)
       console.log(fid)
       group.voices=VoiceIds;
       group.templates=TemplateIds;
@@ -932,14 +954,9 @@ function GroupviewCtrl($scope,$http,VoiceIds,TemplateIds) {
       $http.post( SERVER_DOMAIN + "/edit/group",group).then(function(data){
       if(data.data.status == 'success'){
         $.notify("Edited "+data.data.data.name,'success')
-        $scope.editgroup = {}
         $http.get(SERVER_DOMAIN+'/all/groups/').then(function(response){
         $scope.groups = response.data.groups;
-      
-
-     
-    })
-        
+        })
       }
       else{
         $.notify("Error adding "+group.name,'error')
