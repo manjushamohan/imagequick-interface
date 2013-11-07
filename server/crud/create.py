@@ -12,7 +12,7 @@ def template(template):
 	return True
 
 def hooktemplate(template):
-	database.database.db.hook_templates.insert(template)
+	database.db.hook_templates.insert(template)
 	return True
 
 def format(format):

@@ -542,6 +542,7 @@ def add_hooktemplate():
                 data['statStyleids'] = [str(x) for x in data['statStyleids']]
                 data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
                 data['freStyleids'] = [str(x) for x in data['freStyleids']]
+                data['show']=True
                 create.hooktemplate(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -571,6 +572,7 @@ def add_template():
                 data['freVoiceids'] = [str(x) for x in data['freVoiceids']]
                 data['freStyleids'] = [str(x) for x in data['freStyleids']]
                 data['length'] = float(data['length'])
+                data['show']=True
                 create.template(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:

@@ -402,6 +402,7 @@ function HooktempCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
       $http.post( SERVER_DOMAIN + "/add/hooktemplate",hooktemp).then(function(data){
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
+          console.log(data.data.data)
           $scope.hooktemp = {}
         }
         else{
@@ -650,6 +651,7 @@ function TemplateCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
       $http.post( SERVER_DOMAIN + "/add/template",template).then(function(data){
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
+          console.log(data.data.data)
           $scope.template = {}
         }
         else{
