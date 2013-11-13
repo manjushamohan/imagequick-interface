@@ -38,6 +38,7 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
   $scope.name = 'ImageQuick';
   $scope.hooktemps=[];
   $scope.temps=[];
+  $scope.group={}
   $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
      $scope.voices = response.data.voices
     })
@@ -93,18 +94,20 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
       $scope.hooktemplates=[];
       $scope.templates=[];
       console.log(newVal, oldVal);
-      for(var i=0;i<$scope.hooktemps.length;i++){
-          for(var j=0;j<$scope.hooktemps[i].formatids.length;j++){
-            if(newVal.uid==$scope.hooktemps[i].formatids[j]){
-              $scope.hooktemplates.push($scope.hooktemps[i])
+      if(newVal!=undefined){
+        for(var i=0;i<$scope.hooktemps.length;i++){
+            for(var j=0;j<$scope.hooktemps[i].formatids.length;j++){
+              if(newVal.uid==$scope.hooktemps[i].formatids[j]){
+                $scope.hooktemplates.push($scope.hooktemps[i])
+              }
             }
-          }
-      }
-      for(var i=0;i<$scope.temps.length;i++){
-        for(var j=0;j<$scope.temps[i].formatids.length;j++){
-          if(newVal.uid==$scope.temps[i].formatids[j]){
-            $scope.templates.push($scope.temps[i])
-          }
+        }
+        for(var i=0;i<$scope.temps.length;i++){
+          for(var j=0;j<$scope.temps[i].formatids.length;j++){
+            if(newVal.uid==$scope.temps[i].formatids[j]){
+              $scope.templates.push($scope.temps[i])
+            }
+          } 
         }
       }
     });
@@ -112,8 +115,9 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
       
       group.voices=VoiceIds;
       group.templates=TemplateIds;
-     group['format']=group.format['uid'];
-
+      if(group['format']!=undefined){
+        group['format']=group.format['uid'];
+      }
       console.log(group)
       $http.post( SERVER_DOMAIN + "/add/group",group).then(function(data){
         if(data.data.status == 'success'){
@@ -162,7 +166,7 @@ function BillmCtrl($scope) {
 
 function CouponsCtrl($scope,$http) {
     $scope.name = 'Coupons';
-
+    $scope.coupon={}
     $scope.add = function(coupon){
       $http.post( SERVER_DOMAIN + "/add/coupon",coupon).then(function(data){
         if(data.data.status == 'success'){
@@ -170,6 +174,7 @@ function CouponsCtrl($scope,$http) {
           $scope.coupon = {}
         }
         else{
+          console.log(coupon)
           $.notify("Error adding "+coupon.code,'error')
         }
       });
@@ -180,6 +185,7 @@ function CouponsCtrl($scope,$http) {
 
 function DeliveryCtrl($scope,$http) {
   $scope.name = 'Delivery';
+  $scope.style = {}
     $scope.add = function(style){
       console.log(style)
       $http.post( SERVER_DOMAIN + "/add/style",style).then(function(data){
@@ -199,7 +205,7 @@ function DeliveryCtrl($scope,$http) {
 
 function FormatCtrl($scope,$http,VoiceIds) {
     $scope.name = 'Format';
-   
+    $scope.format = {}
     $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
      $scope.voices = response.data.voices
     })
@@ -251,7 +257,7 @@ function FormatCtrl($scope,$http,VoiceIds) {
 
 function FrequencyCtrl($scope,$http) {
     $scope.name = 'Frequency';
-
+    $scope.frequency = {}
 
     $scope.add = function(frequency){
      
@@ -270,15 +276,16 @@ function FrequencyCtrl($scope,$http) {
 
 function HookCtrl($scope,$http) {
     $scope.name = 'Hook';
-
+    $scope.hook = {}
     $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
       console.log(response.data.formats)
      $scope.formats = response.data.formats
     })
     $scope.add = function(hook){
-      
-      hook['format']=hook.format['name'];
       console.log(hook)
+      if(hook['format']!=undefined){
+        hook['format']=hook.format['name'];
+      }
       $http.post( SERVER_DOMAIN + "/add/hook",hook).then(function(data){
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.hook,'success')
@@ -295,6 +302,7 @@ function HookCtrl($scope,$http) {
 
 function HooktempCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceIds,PosStyleIds,FreStyleIds,StatStyleIds) {
     $scope.name = 'Hooktemp';
+    $scope.hooktemp = {}
     $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -455,6 +463,7 @@ function HooktempCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
 
 function PositionCtrl($scope,$http,FormatIds) {
   $scope.name = 'Position';
+  $scope.position = {}
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -506,6 +515,7 @@ function SfpCtrl($scope) {
 
 function SloganCtrl($scope,$http) {
     $scope.name = 'Slogan';
+    $scope.slogan = {}
     $scope.add = function(slogan){
       $http.post( SERVER_DOMAIN + "/add/slogan_length",slogan).then(function(data){
         if(data.data.status == 'success'){
@@ -524,6 +534,7 @@ function SloganCtrl($scope,$http) {
 
 function StationCtrl($scope,$http,FormatIds) {
     $scope.name = 'Station';
+    $scope.station = {}
     $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -570,6 +581,7 @@ function StationCtrl($scope,$http,FormatIds) {
 
 function TemplateCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceIds,PosStyleIds,FreStyleIds,StatStyleIds) {
   $scope.name = 'Template';
+  $scope.template = {}
   $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
      $scope.formats = response.data.formats
     })
@@ -730,6 +742,7 @@ function TemplateCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
 
 function VoiceCtrl($scope,$http) {
   $scope.name = 'Voice';
+  $scope.voice = {}
   $scope.add = function(voice){
     $http.post( SERVER_DOMAIN + "/add/voice",voice).then(function(data){
       if(data.data.status == 'success'){
