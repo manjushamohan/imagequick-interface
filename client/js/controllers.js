@@ -22,9 +22,14 @@ function UserCtrl($scope,$http) {
   $scope.add = function(user){
     console.log(user)
     $http.post( SERVER_DOMAIN + "/backend/create_user",user).then(function(data){
+      if(data.data.status == 'success'){
        $.notify("Added",'success')
        $scope.user={};
-       
+       }
+       else{
+          $.notify("Error adding user",'error')
+          
+        }
       });
 
   }
@@ -114,8 +119,12 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
           $scope.group = {}
-          
-
+          $scope.group.format={}
+          TemplateIds=[];
+          VoiceIds=[];
+          $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+            $scope.voices = response.data.voices
+          })
         }
         else{
           $.notify("Error adding "+group.name,'error')
@@ -222,7 +231,10 @@ function FormatCtrl($scope,$http,VoiceIds) {
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
           $scope.format = {}
-          
+          VoiceIds=[];
+          $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+            $scope.voices = response.data.voices
+          })
 
         }
         else{
@@ -404,6 +416,22 @@ function HooktempCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
           $.notify("Added "+data.data.data.name,'success')
           console.log(data.data.data)
           $scope.hooktemp = {}
+          FormatIds=[];
+          PosVoiceIds=[];
+          PosStyleIds=[];
+          FreVoiceIds=[];
+          FreStyleIds=[];
+          StatVoiceIds=[];
+          StatStyleIds=[];
+          $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+            $scope.formats = response.data.formats
+          })
+          $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+            $scope.voices = response.data.voices
+          })
+          $http.get(SERVER_DOMAIN+'/get/styles/').then(function(response){
+            $scope.styles = response.data.styles
+          })
         }
         else{
           $.notify("Error adding "+hooktemp.name,'error')
@@ -453,14 +481,19 @@ function PositionCtrl($scope,$http,FormatIds) {
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
           $scope.position = {}
+          FormatIds=[];
+          $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+              $scope.formats = response.data.formats
+          })
         }
         else{
           $.notify("Error adding "+position.name,'error')
         }
       });
-      FormatIds=[];
+     
 
     }
+     FormatIds=[];
 
 }
 
@@ -518,6 +551,10 @@ function StationCtrl($scope,$http,FormatIds) {
         if(data.data.status == 'success'){
           $.notify("Added "+data.data.data.name,'success')
           $scope.station = {}
+          FormatIds=[];
+          $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+            $scope.formats = response.data.formats
+          })
         }
         else{
           $.notify("Error adding "+station.name,'error')
@@ -653,6 +690,22 @@ function TemplateCtrl($scope,$http,FormatIds,PosVoiceIds,FreVoiceIds,StatVoiceId
           $.notify("Added "+data.data.data.name,'success')
           console.log(data.data.data)
           $scope.template = {}
+          FormatIds=[];
+          PosVoiceIds=[];
+          PosStyleIds=[];
+          FreVoiceIds=[];
+          FreStyleIds=[];
+          StatVoiceIds=[];
+          StatStyleIds=[];
+          $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+            $scope.formats = response.data.formats
+          })
+          $http.get(SERVER_DOMAIN+'/get/voices/').then(function(response){
+            $scope.voices = response.data.voices
+          })
+          $http.get(SERVER_DOMAIN+'/get/styles/').then(function(response){
+            $scope.styles = response.data.styles
+          })
         }
         else{
           $.notify("Error adding "+template.name,'error')
