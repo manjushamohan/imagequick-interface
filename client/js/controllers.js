@@ -1319,7 +1319,8 @@ function HookviewCtrl($scope,$http) {
   $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
      $scope.hooks = response.data.hooks
     })
-  $http.get(SERVER_DOMAIN+'/get/formats/').then(function(response){
+  $http.get(SERVER_DOMAIN+'/get/formatsname/').then(function(response){
+    console.log(response.data.formats)
      $scope.formats = response.data.formats
     })
 
@@ -1334,10 +1335,6 @@ function HookviewCtrl($scope,$http) {
     })
 
     $scope.save=function(hook){
-      console.log(hook)
-      if(hook['format']!=fname){
-        hook['format']=hook.format['name'];
-      }
       console.log(hook)
     $http.post( SERVER_DOMAIN + "/edit/hook",hook).then(function(data){
       if(data.data.status == 'success'){

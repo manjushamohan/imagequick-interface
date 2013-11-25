@@ -95,6 +95,11 @@ def get_format_list():
 		}
 		formatlist.append(f)
 	return formatlist
+def get_formatname_list():
+	formatnamelist = []
+	for format in database.db.formats.find():
+		formatnamelist.append(format['name'])
+	return formatnamelist
 
 def get_category_list():
 	list = ['current','recurrent','gold','special']
