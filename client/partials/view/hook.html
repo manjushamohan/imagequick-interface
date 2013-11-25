@@ -16,8 +16,9 @@
         <div class="small-6 columns left" ng-repeat="hook in hooks | filter:filterHook ">
             <div class="small-11 panel">
                 <p>
-                    
-                    <b>Hook</b>: {{ hook.hook }} <br>
+                    <b>Filename</b>: {{ hook.hook }} <br>
+                    <b>Title</b>: {{ hook.song }} <br>
+                    <b>Artist</b>: {{ hook.artist }} <br>
                     <b>Format</b> :{{hook.format}}<br>
                     <b>Category</b>: {{ hook.category }}
                    
@@ -46,7 +47,7 @@
         <div class="row">
           <div class="small-12 columns">
             <div class="small-3 columns">
-              <label class="inline">Hook</label>
+              <label class="inline">Filename</label>
             </div>
             <div class="small-9 columns">
               <input class="in" type="text" id="" ng-model="edithook.hook">
@@ -56,10 +57,40 @@
         <div class="row">
           <div class="small-12 columns">
             <div class="small-3 columns">
+              <label class="inline">Title</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="" ng-model="edithook.song">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Artist</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="" ng-model="edithook.artist">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
+              <label class="inline">Album Art</label>
+            </div>
+            <div class="small-9 columns">
+              <input class="in" type="text" id="" ng-model="edithook.album_art">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="small-3 columns">
               <label class="inline">Select Format</label>
             </div>
             <div class="small-4 columns pull-5">
-                <select id="customDropdown" class="in" ng-options="format.name for format in formats" ng-model="edithook.format"></select>
+                <select id="customDropdown" class="in" ng-options="format for format in formats" ng-model="edithook.format"></select>
              
             </div>
           </div>

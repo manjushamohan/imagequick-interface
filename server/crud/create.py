@@ -55,10 +55,13 @@ def hooktemplate(template):
 
 def hook(hook):
 	if hook['hook'] is not None:
-		database.db.hooks.insert({
+		database.db.new_hooks.insert({
 			'hook':hook['hook'],
 			'format':hook['format'],
-			'category':hook['category']			
+			'category':hook['category'],
+			'song':hook['song'],
+			'artist':hook['artist'],
+			'album_art':hook['album_art']			
 		})
 		if hook['length'] is not None:
 			database.db.hook_lengths.insert({

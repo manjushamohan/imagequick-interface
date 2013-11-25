@@ -22,6 +22,7 @@ import  time
 from werkzeug.datastructures import ImmutableOrderedMultiDict
 from werkzeug import secure_filename
 import os 
+import urllib
 #Overriding JSONIFY for MongoIDs
 try: 
     import json 
@@ -237,7 +238,10 @@ def get_hooks():
 @crossdomain(origin='*', headers='authorization,Content-Type')
 def get_producers():
     return jsonify({'producers':ui_core.get_producer_list()})
-
+@app.route('/get/formatsname/', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def get_formatsname():
+    return jsonify({'formats':ui_core.get_formatname_list()})
 
 @app.route('/get/formats/', methods=['GET'])
 @crossdomain(origin='*', headers='authorization,Content-Type')
@@ -404,9 +408,10 @@ def add_hook():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length']:
+            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length'] and data['song'] and data['artist'] and data['album_art']:
                 data['volength'] = float(data['volength'])
                 data['length'] = float(data['length'])
+                data['album_art']=urllib.quote_plus(data['album_art'], ':/+')
                 create.hook(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:
@@ -826,8 +831,9 @@ def edit_hook():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length']:
+            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length'] and data['song'] and data['artist'] and data['album_art']:
                 
+                data['album_art']=urllib.quote_plus(data['album_art'], ':/+%')
                 edit.hook(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:

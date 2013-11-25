@@ -95,6 +95,11 @@ def get_format_list():
 		}
 		formatlist.append(f)
 	return formatlist
+def get_formatname_list():
+	formatnamelist = []
+	for format in database.db.formats.find():
+		formatnamelist.append(format['name'])
+	return formatnamelist
 
 def get_category_list():
 	list = ['current','recurrent','gold','special']
@@ -182,12 +187,12 @@ def get_frequency(id):
 
 def get_hooks():
 	hooklist = []
-	for hook in database.db.hooks.find():
+	for hook in database.db.new_hooks.find():
 		hooklist.append(hook)
 	return hooklist
 def get_hook(id):
 	id=ObjectId(id)
-	hook=database.db.hooks.find_one({'_id':id})
+	hook=database.db.new_hooks.find_one({'_id':id})
 	hook['length']=database.db.hook_lengths.find_one({'file':hook['hook']})
 	hook['volength']=database.db.hook_lengths.find_one({'file':hook['hook']+"_VO"})
 	return hook
