@@ -828,8 +828,9 @@ def edit_hook():
         data = request.json # This gets all json data posted here ,ie the data on top
         #Do some double checking verifications
         try:
-            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length']:
+            if data['hook'] and data['format'] and data['category'] and data['volength'] and data['length'] and data['song'] and data['artist'] and data['album_art']:
                 
+                data['album_art']=urllib.quote_plus(data['album_art'], ':/')
                 edit.hook(data)
                 return jsonify({'status':'success','data':data}) # Pick this data using Angular
             else:

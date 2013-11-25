@@ -37,9 +37,12 @@ def hook(hook):
 	hook['_id']=ObjectId(hook['_id'])
 	if hook['hook'] is not None:
 
-		database.db.hooks.save({
+		database.db.new_hooks.save({
 			'_id':hook['_id'],
 			'hook':hook['hook'],
+			'song':hook['song'],
+			'artist':hook['artist'],
+			'album_art':hook['album_art'],
 			'format':hook['format'],
 			'category':hook['category']			
 		})

@@ -1334,6 +1334,7 @@ function HookviewCtrl($scope,$http) {
     })
 
     $scope.save=function(hook){
+      console.log(hook)
       if(hook['format']!=fname){
         hook['format']=hook.format['name'];
       }
