@@ -1368,7 +1368,7 @@ function HookviewCtrl($scope,$http) {
       console.log($scope.hook)
       $http.post( SERVER_DOMAIN + "/delete/hook",$scope.hook).then(function(data){
         if(data.data.status == 'success'){
-        $.notify("Edited ",'success')
+        $.notify("Deleted",'success')
         $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
         $scope.hooks = response.data.hooks
       })
