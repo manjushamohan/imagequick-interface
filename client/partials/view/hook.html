@@ -16,6 +16,7 @@
         <div class="small-6 columns left" ng-repeat="hook in hooks | filter:filterHook ">
             <div class="small-11 panel">
                 <p>
+
                     <b>Filename</b>: {{ hook.hook }} <br>
                     <b>Title</b>: {{ hook.song }} <br>
                     <b>Artist</b>: {{ hook.artist }} <br>
@@ -44,6 +45,7 @@
   <h2>Edit Hook</h2>
     <form class="custom">
       <fieldset>
+        <img src ="{{edithook.album_art}}"></img>
         <div class="row">
           <div class="small-12 columns">
             <div class="small-3 columns">
