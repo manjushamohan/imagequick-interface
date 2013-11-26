@@ -57,7 +57,7 @@ def hook(id,lid,vid):
 	id=ObjectId(id)
 	lid=ObjectId(lid)
 	vid=ObjectId(vid)
-	database.db.hooks.remove( { '_id' : id } )
+	database.db.new_hooks.remove( { '_id' : id } )
 	database.db.hook_lengths.remove( { '_id' : lid } )
 	database.db.hook_lengths.remove( { '_id' : vid } )
 	return True
