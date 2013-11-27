@@ -45,7 +45,8 @@
   <h2>Edit Hook</h2>
     <form class="custom">
       <fieldset>
-        <img src ="{{edithook.album_art}}"></img>
+        <div class="row">
+        <div class="small-8 columns">
         <div class="row">
           <div class="small-12 columns">
             <div class="small-3 columns">
@@ -138,6 +139,11 @@
          <div class="row">
         <button class="button small" ng-click="save(edithook)">Done</button>
       </div>
+    </div>
+    <div class="small-4 columns">
+        <img ng-src="{{edithook.album_art}}" height="200" width="200"></img>
+    </div>
+  </div>
       </fieldset>
     </form>
   </div>
