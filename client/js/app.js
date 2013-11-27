@@ -15,8 +15,19 @@ app.run(function ($rootScope, $location, $anchorScroll, $routeParams) {
     );
 })
 ;
-
-
+app.config(function($httpProvider) {
+        var numLoadings = 0;
+        var loadingScreen = $('<div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:10000;background-color:white;background-color:rgba(255,255,255,0.6);"><div style="position:absolute;top:45%;left:45.5%;font-size:4em;text-align:center"><img src="/img/ajax_loader_gray_128.gif"></img></div></div>')
+            .appendTo($('body')).hide();
+       $httpProvider.responseInterceptors.push(function() {
+            return function(promise) {
+                numLoadings++;
+                loadingScreen.show();
+                var hide = function(r) { if (!(--numLoadings)) loadingScreen.hide(); return r; };
+                return promise.then(hide, hide);
+            };
+        });
+    });
 /*
  For adding remove method to arrays
  */
