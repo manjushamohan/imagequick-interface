@@ -1,0 +1,40 @@
+<div>
+<div class="row">
+    <h1>Album Art Loader</h1>
+    <hr>
+   <div class="row collapse">
+            <div class="small-3 large-2 columns">
+                <span class="prefix">Quick Search</span>
+            </div>
+            <div class="small-9 large-10 columns">
+                <input type="text" ng-model="filterHook" placeholder="enter hooks filename to search for     ">
+            </div>
+        </div>
+
+    
+
+    <div class="row">
+        <div class="small-6 columns">
+            <table class="large-12 columns">
+                <thead>
+                <tr>
+                    <th>hooks</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="hook in hooks | filter:filterHook ">
+                        <td>{{hook.hook}}</td>
+                        <td><span class="button tiny" ng-click="search(hook)">Search</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="small-6 columns">
+            <div class="small-4 columns" ng-repeat="img in imgs">
+            <img style="float:left" ng-src="{{img}}" height="150" width="150"></img>
+            <a href="{{img}}" download="{{img}}" title="ImageName" class="button small">Download</a>
+        </div>
+
+    </div>
+</div>

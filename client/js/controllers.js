@@ -104,6 +104,21 @@ function GroupCtrl($scope,$http,TemplateIds,VoiceIds) {
     TemplateIds=[];
 
 }
+function UtilitiesCtrl($scope,$http) {
+  $scope.name = 'ImageQuick';
+  console.log("hooks")
+  $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
+     $scope.hooks = response.data.hooks
+     console.log(response.data.hooks)
+    })
+  $scope.search = function(hook){
+    $http.get( SERVER_DOMAIN + "/gets/img/"+hook.artist+"/"+hook.song).then(function(response){
+      $scope.imgs=response.data.data
+      console.log(response)
+    })
+
+  }
+}
 
 function HomeCtrl($scope) {
   $scope.name = 'ImageQuick';
