@@ -23,6 +23,8 @@ from werkzeug.datastructures import ImmutableOrderedMultiDict
 from werkzeug import secure_filename
 import os 
 import urllib
+import requests
+from sets import Set
 #Overriding JSONIFY for MongoIDs
 try: 
     import json 
@@ -1420,6 +1422,18 @@ def add_user():
             else:
                 return Response('Username/Email Already Found')
             return render_template('affliateconfirmation.html', data=data)
+
+@app.route('/gets/img/<artist>/<song>', methods=['GET'])
+@crossdomain(origin='*', headers='authorization,Content-Type')
+def img(artist,song):
+    imglist=[]
+    filename=artist+' '+song
+    k = requests.get('https://itunes.apple.com/search?term='+filename)
+    results = json.loads(k.content)['results']
+    for result in results:
+        imglist.append(result['artworkUrl100'])
+    imgs=list(Set(imglist))
+    return jsonify({'status':'success','data':imgs})
         
 
 

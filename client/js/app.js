@@ -69,6 +69,7 @@ app.config(['$httpProvider', function($httpProvider) {
     $routeProvider.when('/add/user', {templateUrl: 'partials/user.html', controller: 'UserCtrl'})
     $routeProvider.when('/add/group', {templateUrl: 'partials/group.html', controller: 'GroupCtrl'})
     $routeProvider.when('/analytics/', {templateUrl: 'partials/analytics/home.html', controller: 'Analt_HomeCtrl'});
+    $routeProvider.when('/utilities', {templateUrl: 'partials/utilities.html', controller: 'UtilitiesCtrl'});
 
     $routeProvider.when('/view/user', {templateUrl: 'partials/view/user.html', controller: 'UserviewCtrl'});
     $routeProvider.when('/view/group', {templateUrl: 'partials/view/group.html', controller: 'GroupviewCtrl'});
