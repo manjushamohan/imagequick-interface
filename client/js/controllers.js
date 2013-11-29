@@ -109,12 +109,12 @@ function UtilitiesCtrl($scope,$http) {
   console.log("hooks")
   $http.get(SERVER_DOMAIN+'/all/hooks/').then(function(response){
      $scope.hooks = response.data.hooks
-     console.log(response.data.hooks)
+     
     })
   $scope.search = function(hook){
     $http.get( SERVER_DOMAIN + "/gets/img/"+hook.artist+"/"+hook.song).then(function(response){
       $scope.imgs=response.data.data
-      console.log(response)
+      
     })
 
   }
@@ -1719,5 +1719,5 @@ function PositionbatchCtrl($scope,$http) {
         }
       });
     }
-
 }
+
